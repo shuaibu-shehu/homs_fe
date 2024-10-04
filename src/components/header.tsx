@@ -5,7 +5,7 @@ import { Button } from './ui/button'
 
 function Header() {
   return (
-    <div className='bg-green-800/80  backdrop-blur-sm border-b-2 border-b-lime-900  z-50   sticky top-0 p-2 flex  mb-10 w-full justify-between items-center'>
+    <nav className='bg-green-800/80 backdrop-blur-sm border-b-2 border-b-lime-900 z-50 sticky top-0 p-2 flex w-full justify-between items-center'>
         <Link href={"/"} className='  font-bold h-[60px]  flex items-center justify-center gap-2'>
             <Image src={"/logo.png"} className='rounded-full h-[50px] w-[50px]' alt='logo' width={100} height={50}/>
            <span className=' text-white'>
@@ -25,7 +25,7 @@ function Header() {
              Login / Register
             </Link>
         </Button>
-    </div>
+    </nav>
   )
 }
 
