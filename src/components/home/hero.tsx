@@ -20,8 +20,8 @@ function Hero() {
         </div>
       </div>
 
-      <CTAButton className=' rounded-lg bg-green-900 hover:bg-green-800' >
-        <span className='p-5'>
+      <CTAButton className=' flex h-[50px] font-bold rounded-lg bg-green-900 hover:bg-green-800 w-60 my-6' >
+        <span className='p-5 my-4 text-lg'>
         Get started
         </span>
         </CTAButton>

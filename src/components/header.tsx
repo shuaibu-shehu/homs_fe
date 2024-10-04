@@ -25,7 +25,7 @@ function Header() {
                     Contact 
                 </Link> 
             </nav>
-        <Button  variant={"secondary"} className='  font-bold  flex items-center justify-center text-gray-500 gap-2'>
+        <Button  variant={"secondary"} className='  font-bold  flex items-center justify-center text-green-700 gap-2'>
             <Link href={"/login"}>
              Login / Register
             </Link>

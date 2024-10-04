@@ -1,6 +1,7 @@
 import React from 'react'
 import { Button } from './ui/button'
 import { Loader2 } from 'lucide-react'
+import { cn } from '@/lib/utils'
 
 
 type variant = "default" | "secondary"| "outline" | "ghost" | "link"| "destructive"
@@ -18,7 +19,7 @@ export default function CTAButton({
   
 }:CTAButtonProps) {
   return (
-    <Button className={className} variant={variant} >
+    <Button className={cn("" ,className)} variant={variant} >
         {children}
         {isLoading && <Loader2 className='ml-2 h-4 w-4 animate-spin'/>}
     </Button>
