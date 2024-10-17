@@ -19,7 +19,13 @@ export default function CTAButton({
   
 }:CTAButtonProps) {
   return (
-    <Button className={cn("" ,className)} variant={variant} >
+    <Button 
+    disabled={isLoading}
+    className={cn(
+     isLoading ? "opacity-80" : "opacity-100",
+      "" ,
+    className
+    )} variant={variant} >
         {children}
         {isLoading && <Loader2 className='ml-2 h-4 w-4 animate-spin'/>}
     </Button>

@@ -16,7 +16,7 @@ function Features() {
           <div className='h-[350px] bg-green-800/100  shadow-2xl text-white flex flex-col items-center text-left gap-4 max-w-[300px] leading-7 border-2 p-6 rounded-lg'>
             <LucideBarChart2 color='white'   size={40} />
             <div>
-            Keep track of the overall oxygen consumption from the central planted tank. The system continuously monitors the tank's levels and usage, allowing for efficient management and timely refills, ensuring no interruptions in oxygen supply            </div>
+            Keep track of the overall oxygen consumption from the central planted tank. The system continuously monitors the tank&apos;s levels and usage, allowing for efficient management and timely refills, ensuring no interruptions in oxygen supply            </div>
           </div>
           <div className='h-[350px] bg-green-800/100  shadow-2xl text-white flex flex-col items-center text-left gap-4 max-w-[300px] leading-7 border-2 p-6 rounded-lg'>
             <LucideAlertCircle color='white'   size={40} />

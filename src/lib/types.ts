@@ -8,6 +8,15 @@ export const FormSchema = z.object({
   });
 
 
+  export const HospitalOnboardingFormSchema = z.object({
+    name: z.string().describe('Name').min(5, 'Name must be at least 5 characters long.'),
+    contactEmail: z.string().describe('Email').email({ message: 'Invalid Email' }),
+    contactPhone: z.string().describe('Contact Phone').min(10, 'Contact Phone must be at least 10 characters long.'),
+    address: z.string().describe('Address').optional(),
+  });
+  
+
+
 
 export const SignUpFormSchema = z
 .object({

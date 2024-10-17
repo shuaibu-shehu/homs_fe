@@ -3,7 +3,7 @@ import Image from "next/image"
 import Link from 'next/link'
 import { Button } from './ui/button'
 import MaxWidthWrapper from './max-width-wrapper'
-
+import { AlignJustifyIcon } from 'lucide-react'
 function Header() {
   return (
     <nav className='bg-green-800/80 backdrop-blur-sm border-b-2 border-b-lime-900 z-50 sticky top-0 p-2 flex w-full justify-between items-center'>
@@ -15,7 +15,8 @@ function Header() {
             HOMS
            </span>
             </Link>
-            <div className='flex gap-7'>
+            <div 
+            className='sm:flex hidden gap-7'>
 
             <nav className=' flex justify-center items-center gap-7'>
                 <Link href={"/about"} className=' p-2 transition-all rounded-lg hover:text-gray-400 font-bold  flex items-center justify-center text-gray-200 gap-2'>    
@@ -27,10 +28,17 @@ function Header() {
             </nav>
         <Button  variant={"secondary"} className='  font-bold  flex items-center justify-center text-green-700 gap-2'>
             <Link href={"/login"}>
-             Login / Register
+             Login
+            </Link>
+        </Button>
+        <Button  variant={"secondary"} className='  font-bold  flex items-center justify-center text-green-700 gap-2'>
+            <Link href={"/register"}>
+              Register
             </Link>
         </Button>
             </div>
+
+        <AlignJustifyIcon className=' sm:hidden'  color='white'/>
         </MaxWidthWrapper>
     </nav>
   )
