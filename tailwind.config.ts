@@ -50,10 +50,10 @@ const config: Config = {
   				'4': 'hsl(var(--chart-4))',
   				'5': 'hsl(var(--chart-5))'
   			},
-			default:{
-				A: "#120B48"
-			}
-		},
+  			default: {
+  				A: '#120B48'
+  			}
+  		},
   		borderRadius: {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',

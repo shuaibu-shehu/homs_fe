@@ -25,7 +25,6 @@ function SignUpForm() {
 
     const onSubmit = async (data: z.infer<typeof SignUpFormSchema>) => {
           const res=  await actionSignUpUser(data);
-        console.log("resd ", res?.success);
         
         if (res?.message) {
             toast({
@@ -41,10 +40,6 @@ function SignUpForm() {
             })
         }
         
-
-        // await new Promise((resolve) => setTimeout(resolve, 7000));
-        // console.log(loading);
-        // console.log(data);
     };
 
     return (

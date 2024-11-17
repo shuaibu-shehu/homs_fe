@@ -98,3 +98,9 @@ body {
   60% { transform: rotate( 0.0deg) }
   100% { transform: rotate( 0.0deg) }
 }
+
+ 
+.grad{
+  /* background: linear-gradient(180deg, #0d0333, #32055f, #5e0c72); */
+background:  linear-gradient(180deg, #0e5c33, #0b3f0c, #0d3a18)
+}

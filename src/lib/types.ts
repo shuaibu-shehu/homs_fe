@@ -35,3 +35,50 @@ export const SignUpFormSchema = z
   message: "Passwords don't match.",
   path: ['confirmPassword'],
 });
+
+
+
+export const LoginFormSchema = z.object({
+  email: z.string().describe('Email').email({ message: 'Invalid Email' }),
+  password: z.string().describe('Password').min(1, 'Password is required'),
+});
+
+
+
+export const HospitalOnboardingSchema = z.object({
+  hospitalName: z
+    .string()
+    .min(1, { message: "Hospital name is required" })
+    .max(100, { message: "Hospital name should be 100 characters or less" }),
+  address: z
+    .string()
+    .min(1, { message: "Address is required" })
+    .max(200, { message: "Address should be 200 characters or less" }),
+  city: z.string().min(1, { message: "City is required" }),
+  country: z.string().min(1, { message: "Country is required" }),
+  state: z.string().min(1, { message: "State is required" }),
+  contactPerson: z
+    .string()
+    .min(1, { message: "Contact person is required" })
+    .max(50, { message: "Contact person should be 50 characters or less" }),
+  contactNumber: z
+    .string()
+    .min(10, { message: "Contact number must be at least 10 digits" })
+    .max(15, { message: "Contact number should be 15 digits or less" })
+    .regex(/^\d+$/, { message: "Contact number should contain only digits" }),
+  email: z
+    .string()
+    .min(1, { message: "Email is required" })
+    .email({ message: "Please enter a valid email address" }),
+});
+
+
+// Combine schemas into one for final validation
+// export const HospitalOnboardingSchema = z.object({
+//   hospitalName: z.string().min(1, "Hospital name is required"),
+//   address: z.string().min(1, "Address is required"),
+//   contactPerson: z.string().min(1, "Contact person is required"),
+//   contactNumber: z.string().regex(/^\d+$/, "Contact number should contain only digits"),
+//   email: z.string().email("Please enter a valid email address"),
+
+// });
