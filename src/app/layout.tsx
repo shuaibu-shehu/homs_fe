@@ -1,22 +1,17 @@
 import type {Metadata} from "next"
-import localFont from "next/font/local"
+import {Poppins} from "next/font/google" // Import Poppins from next/font/google
 import "./globals.css"
 import Header from "@/components/header"
 import {Toaster} from "@/components/ui/toaster"
-// import { SessionProvider } from 'next-auth/react'
-// import { auth } from "@/auth";
-import {AuthProvider} from "@/components/providers/authProvider"
-import {currentUser} from "@/lib/auth"
+import {SessionProvider} from "next-auth/react"
+import {auth} from "@/auth"
+import {ModalProvider} from "@/components/providers/modals-provider"
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-})
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
+// Use Poppins font from Google Fonts
+const poppins = Poppins({
+  subsets: ["latin"], // Add more subsets if needed (e.g., "latin-ext" for extended characters)
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"], // You can specify multiple weights here
+  variable: "--font-poppins", // Set the CSS variable for customization
 })
 
 export const metadata: Metadata = {
@@ -29,19 +24,19 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  // const session = await auth();
-
-  const user = await currentUser()
+  const session = await auth()
 
   return (
     <html lang='en'>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased marker:bg-slate-600`}>
-        <AuthProvider>
-          {user ? <h1></h1> : <Header />}
+        className={`${poppins.variable} antialiased marker:bg-slate-600`} // Apply the Poppins font globally
+      >
+        <SessionProvider session={session}>
+          <ModalProvider />
+          {session?.user ? <h1></h1> : <Header />}
           {children}
           <Toaster />
-        </AuthProvider>
+        </SessionProvider>
       </body>
     </html>
   )
