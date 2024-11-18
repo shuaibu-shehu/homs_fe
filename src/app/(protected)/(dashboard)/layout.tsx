@@ -2,7 +2,7 @@
 // import Navbar from "@/components/Navbar";
 import Menu from "@/components/dashboard/menu";
 import Navbar from "@/components/dashboard/navbar";
-import { currentUser } from "@/lib/auth";
+// import { currentUser } from "@/lib/auth";
 import Image from "next/image";
 import Link from "next/link";
 // import { redirect } from 'next/navigation';
@@ -13,10 +13,7 @@ export default async function DashboardLayout({
     children: React.ReactNode;
 }>) {
 
-    const user = await currentUser(); 
-
-    console.log("dashboart layout user: ", user);
-    
+    // const user = await currentUser();     
    
 
     return (
@@ -33,7 +30,7 @@ export default async function DashboardLayout({
                 <Menu />
             </div>
             {/* RIGHT */}
-            <div className="w-[86%] md:w-[92%] lg:w-[84%] xl:w-[86%] bg-[#F7F8FA] overflow-scroll flex flex-col">
+            <div className="w-[86%] md:w-[92%] max-h=[calc(100vh-64px)] lg:w-[84%] xl:w-[86%] bg-[#EAFBEA] overflow-scroll flex flex-col">
                 <Navbar />
                 {children}
             </div>
