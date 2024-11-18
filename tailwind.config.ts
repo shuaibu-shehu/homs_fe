@@ -52,7 +52,19 @@ const config: Config = {
   			},
   			default: {
   				A: '#120B48'
-  			}
+				},
+			custome: {
+				"green-100": '#EAFBEA',
+				"green-200": '#D6F8D6',
+				"green-300": '#4CAF4F',
+				"green-400": '#9EB79E',
+				"green-500": '#567B56',
+				"A": '#E9E9E9',
+				"B": '#A7A9C0',
+				"red-100": '#F8D7DA',
+				"red-200": '#FC100D',
+
+				},
   		},
   		borderRadius: {
   			lg: 'var(--radius)',

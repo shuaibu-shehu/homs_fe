@@ -3,10 +3,7 @@
 // import { newVerification } from '@/lib/server-actions/auth-actions';
 import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import React, { useCallback, useEffect, useState } from 'react'
-import { toast } from './ui/use-toast';
 import { Loader2, LockIcon, MailWarning, WarehouseIcon } from 'lucide-react';
-// import 
-// import { Button } from '../ui/button';
 import Link from 'next/link';
 import { BeatLoader } from 'react-spinners';
 import { useToast } from '@/hooks/use-toast';
