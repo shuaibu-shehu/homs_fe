@@ -54,12 +54,12 @@ async function Header() {
               {" "}
               <Button
                 variant={"secondary"}
-                className='  font-bold  flex items-center justify-center bg-[#4caf4f] text-[#ffffff] gap-2 hover:bg-[#4d4d4d]'>
+                className='  font-bold  flex items-center justify-center bg-custome-green-300 text-[#ffffff] gap-2 hover:bg-[#4d4d4d]'>
                 <Link href={"/login"}>Login</Link>
               </Button>
               <Button
                 variant={"secondary"}
-                className='  font-bold  flex items-center justify-center bg-[#4caf4f] text-white gap-2 hover:bg-[#4d4d4d]'>
+                className='  font-bold  flex items-center justify-center bg-custome-green-300 text-white gap-2 hover:bg-[#4d4d4d]'>
                 <Link href={"/register"}>Register</Link>
               </Button>
             </>

@@ -9,7 +9,8 @@ function Hero() {
       <div className=' flex flex-row justify-between items-center gap-20 '>
         <div className='flex-1 flex flex-col gap-4'>
           <h1 className='text-6xl font-bold text-[#4d4d4d]'>
-            Hospital <span className='text-[#4caf4f]'>Oxygen Management </span>
+            Hospital{" "}
+            <span className='text-custome-green-300'>Oxygen Management </span>
             System
           </h1>
           <p className='text-[#808080] font-normal'>
@@ -28,7 +29,7 @@ function Hero() {
         </div>
       </div>
 
-      <CTAButton className=' flex h-[50px] font-bold rounded-lg bg-[#4caf4f] hover:bg-[#263238] w-60 my-6'>
+      <CTAButton className=' flex h-[50px] font-bold rounded-lg bg-custome-green-300 hover:bg-[#263238] w-60 my-6'>
         <span className='p-5 my-4 text-lg'>Get started</span>
       </CTAButton>
     </MaxWidthWrapper>
