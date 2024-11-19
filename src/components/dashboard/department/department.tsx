@@ -1,7 +1,7 @@
 import React from 'react'
 // import DepartmentBarChart from './department-chart'
 import RealTimeOxygenConsumption from './realtime-oxygen-consumption-graph'
-import DepartmentList from './department-list'
+import DepartmentList from './departments-list'
 
 function Department() {
   return (

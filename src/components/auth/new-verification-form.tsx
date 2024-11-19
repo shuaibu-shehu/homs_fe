@@ -1,9 +1,9 @@
 'use client'
 
 // import { newVerification } from '@/lib/server-actions/auth-actions';
-import { useParams, useRouter, useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import React, { useCallback, useEffect, useState } from 'react'
-import { Loader2, LockIcon, MailWarning, WarehouseIcon } from 'lucide-react';
+import { Loader2, LockIcon, MailWarning } from 'lucide-react';
 import Link from 'next/link';
 import { BeatLoader } from 'react-spinners';
 import { useToast } from '@/hooks/use-toast';
@@ -21,13 +21,14 @@ function NewVerificationForm() {
     const onSubmit = useCallback(async () => {
         setLoading(true)
         if (!token) return
-         const res = await newVerification(token)
+        const res = await newVerification(token)
+        console.log("res: ", res);
+        
         if (res) {
             setResponse(res)
         }
              
         if (res && res.success) {
-            setResponse(res)
             setLoading(false)
             setTimeout(() => {
                 router.push('/login')
@@ -58,8 +59,8 @@ function NewVerificationForm() {
                 <MailWarning /> {response.error}
             </div>)}
                 
-            {response.resolution && (<div className=' flex bg-gray-300 gap-3 p-2 text-center rounded-sm text-lg '>
-                 {response.resolution}
+            {!response.success && (<div className=' flex bg-gray-300 gap-3 p-2 text-center rounded-sm text-lg '>
+                 {response.message}
             </div>)}
             
             {response.success && !loading && <div className='text-green-500 text-3xl'>{setResponse.message} you will shortly get navigated to login page</div>}

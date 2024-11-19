@@ -82,3 +82,9 @@ export const HospitalOnboardingSchema = z.object({
 //   email: z.string().email("Please enter a valid email address"),
 
 // });
+
+
+export const AddDepartmentSchema = z.object({
+  name: z.string().nonempty('Department name is required'),
+  status: z.boolean(),
+});
