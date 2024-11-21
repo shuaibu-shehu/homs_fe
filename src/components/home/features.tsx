@@ -9,8 +9,9 @@ function Features() {
         Features
       </h1>
       <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 place-items-center gap-4'>
-        <div className=' h-[350px] bg-[#f5f7fa]  shadow-2xl text-[#4d4d4d] flex flex-col items-center text-left gap-4 max-w-[300px]  leading-7 border-2 p-6 rounded-lg'>
+        <div className=' h-96 bg-custome-silver-100 shadow-2xl text-[#4d4d4d] flex flex-col items-center text-left gap-4 max-w-[300px]  leading-7 border-2 p-6 rounded-lg'>
           <LucideMonitor color='#4cac4c' size={40} />
+          <h1 className='font-semibold text-slate-500'>Easy integration</h1>
           <div>
             Monitor individual patient oxygen consumption in real time, ensuring
             each patient receives the exact amount of oxygen they need based on
@@ -18,8 +19,9 @@ function Features() {
             response by healthcare providers.
           </div>
         </div>
-        <div className='h-[350px] bg-[#f5f7fa] shadow-2xl text-[#4d4d4d] flex flex-col items-center text-left gap-4 max-w-[300px] leading-7 border-2 p-6 rounded-lg'>
+        <div className='h-96 bg-custome-silver-100 shadow-2xl text-[#4d4d4d] flex flex-col items-center text-left gap-4 max-w-[300px] leading-7 border-2 p-6 rounded-lg'>
           <LucideBarChart2 color='#4cac4c' size={40} />
+          <h1 className='font-semibold text-slate-500'>Real time monitoring</h1>
           <div>
             Keep track of the overall oxygen consumption from the central
             planted tank. The system continuously monitors the tank&apos;s
@@ -27,8 +29,9 @@ function Features() {
             refills, ensuring no interruptions in oxygen supply{" "}
           </div>
         </div>
-        <div className='h-[350px] bg-[#f5f7fa]  shadow-2xl text-[#4d4d4d] flex flex-col items-center text-left gap-4 max-w-[300px] leading-7 border-2 p-6 rounded-lg'>
+        <div className='h-96 bg-custome-silver-100  shadow-2xl text-[#4d4d4d] flex flex-col items-center text-left gap-4 max-w-[300px] leading-7 border-2 p-6 rounded-lg'>
           <LucideAlertCircle color='#4cac4c' size={40} />
+          <h1 className='font-semibold text-slate-500'>Instant Alerts</h1>
           <div>
             Get instant alerts if patient oxygen levels fluctuate or if the
             central tank’s oxygen supply drops below critical levels. These

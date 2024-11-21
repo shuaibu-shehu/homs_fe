@@ -18,7 +18,7 @@ export function PageWrapper({
 }: PageWrapperProps) {
   return (
     <div className='flex h-screen '>
-      <div className='flex-1 flex justify-center  pt-10'>
+      <div className='flex-1 flex justify-end pt-10 pr-10'>
         <div className='flex flex-col gap-5 w-1/2 '>
           <h1 className='text-4xl text-slate-700 font-extrabold '>{title}</h1>
           <p className='text-slate-500 pb-5'>{discription}</p>
@@ -26,7 +26,7 @@ export function PageWrapper({
         </div>
       </div>
 
-      <div className='flex-1 bg-slate-200 flex justify-center pt-20'>
+      <div className='flex-1 flex justify-center pt-20'>
         <img
           src={imageSrc}
           alt={altText}

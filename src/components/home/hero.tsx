@@ -29,7 +29,7 @@ function Hero() {
         </div>
       </div>
 
-      <CTAButton className=' flex h-[50px] font-bold rounded-lg bg-custome-green-300 hover:bg-[#263238] w-60 my-6'>
+      <CTAButton className=' flex h-[50px] font-bold rounded-lg bg-custome-green-300 hover:bg-[#263238] w-60 my-6 animate-bounce'>
         <span className='p-5 my-4 text-lg'>Get started</span>
       </CTAButton>
     </MaxWidthWrapper>

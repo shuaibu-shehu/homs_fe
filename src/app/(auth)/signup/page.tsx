@@ -7,7 +7,7 @@ function Page() {
     <PageWrapper
       title='Get Started Now'
       discription='Lets get you all set up'
-      imageSrc='/login.png'
+      imageSrc='/signup.png'
       altText='sign up image'>
       <SignUpForm />
     </PageWrapper>

@@ -63,6 +63,7 @@ const config: Config = {
           B: "#A7A9C0",
           "red-100": "#F8D7DA",
           "red-200": "#FC100D",
+          "silver-100": "#f5f7fa",
         },
       },
       borderRadius: {
