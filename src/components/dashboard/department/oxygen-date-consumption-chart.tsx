@@ -11,7 +11,7 @@ const generateData = () => {
     const startDate = new Date()
     startDate.setMonth(startDate.getMonth() - 2)
 
-    let baseConsumption = 800
+    const baseConsumption = 800
     const trend = 2 // Slight upward trend
 
     for (let i = 0; i < 60; i++) {
@@ -53,7 +53,7 @@ export default function OxygenConsumptionChart() {
         return () => window.removeEventListener('resize', updateVisibleDataPoints)
     }, [updateVisibleDataPoints])
 
-    const handleScroll = useCallback((direction) => {
+    const handleScroll = useCallback((direction: number) => {
         setStartIndex((prevIndex) => {
             const newIndex = prevIndex + direction * Math.floor(visibleDataPoints / 2)
             return Math.max(0, Math.min(newIndex, oxygenConsumptionData.length - visibleDataPoints))
@@ -61,13 +61,13 @@ export default function OxygenConsumptionChart() {
     }, [visibleDataPoints])
 
     return (
-        <Card className="w-full">
+        <Card className="w-full max-w-[800px]   justify-center items-center">
             <CardHeader>
                 <CardTitle>Oxygen Consumption - Last Two Months</CardTitle>
                 <CardDescription>Daily oxygen consumption in the Pulmonology Department</CardDescription>
             </CardHeader>
             <CardContent>
-                <div className="relative h-[300px] sm:h-[400px] w-full">
+                <div className="relative h-[300px] sm:h-[400px] w-full sm:max-w-[800px]">
                     <ResponsiveContainer width="100%" height="100%">
                         <LineChart
                             data={oxygenConsumptionData.slice(startIndex, startIndex + visibleDataPoints)}

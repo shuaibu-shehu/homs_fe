@@ -88,3 +88,11 @@ export const AddDepartmentSchema = z.object({
   name: z.string().nonempty('Department name is required'),
   status: z.boolean(),
 });
+
+export const AddStaffSchema = z.object({
+  name: z.string().nonempty("Name is required"),
+  role: z.string().nonempty("Role is required"),
+  status: z.string().nonempty("Status is required"),
+  contact: z.string().nonempty("Contact is required"),
+  email: z.string().email("Invalid email address").nonempty("Email is required"),
+});

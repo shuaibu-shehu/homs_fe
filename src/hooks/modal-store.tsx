@@ -1,7 +1,7 @@
 import { create } from "zustand";
 
 
-export type ModalType = 'addDepartment'
+export type ModalType = 'addDepartment' | 'addStaff'
 
 // interface ModalData {
 //     channelType?: ;

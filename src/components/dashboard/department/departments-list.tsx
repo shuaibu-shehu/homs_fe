@@ -1,15 +1,7 @@
 'use client';
 import CustomeSearch from '@/components/global/custome-search';
 import { Button } from '@/components/ui/button';
-import {
-    Table,
-    TableHeader,
-    TableRow,
-    TableHead,
-    TableBody,
-    TableCell,
-    TableFooter,
-} from '@/components/ui/table';
+import ReusableTable from '@/components/global/custome-table';
 import { useModal } from '@/hooks/modal-store';
 import React from 'react';
 
@@ -58,8 +50,19 @@ const departments = [
     },
 ];
 
+const columns = [
+    { header: 'Department Name', accessor: 'departmentName' },
+    { header: 'Staffs', accessor: 'staffs' },
+    { header: 'Patients', accessor: 'patients' },
+    { header: 'Status', accessor: 'status' },
+    { 
+        header: 'Action', 
+        accessor: 'action', 
+        render: (action: unknown) => <button className="px-3 py-1 bg-custome-green-300 text-white rounded">{action as string}</button> 
+    }
+];
+
 function DepartmentList() {
-    // Data for departments
     const { onOpen } = useModal();
     return (
         <div className="py-4 bg-white">
@@ -75,41 +78,7 @@ function DepartmentList() {
                     </Button>
                 </div>
             </div>
-            <Table className="w-full bg-white border-collapse">
-                <TableHeader className="bg-custome-green-200 text-custome-green-300">
-                    <TableRow>
-                        <TableHead className="w-[150px] text-custome-green-300 px-4 py-2">
-                            Department Name
-                        </TableHead>
-                        <TableHead className="text-custome-green-300 px-4 py-2">Staffs</TableHead>
-                        <TableHead className="text-custome-green-300 px-4 py-2">Patients</TableHead>
-                        <TableHead className="text-custome-green-300 px-4 py-2">Status</TableHead>
-                        <TableHead className="text-custome-green-300 px-4 py-2">Action</TableHead>
-                    </TableRow>
-                </TableHeader>
-                <TableBody>
-                    {departments.map((department, index) => (
-                        <TableRow key={index} className="hover:bg-gray-50">
-                            <TableCell className="px-4 py-2">{department.departmentName}</TableCell>
-                            <TableCell className="px-4 py-2">{department.staffs}</TableCell>
-                            <TableCell className="px-4 py-2">{department.patients}</TableCell>
-                            <TableCell className="px-4 py-2">{department.status}</TableCell>
-                            <TableCell className="px-4 py-2">
-                                <button className="px-3 py-1 bg-blue-500 text-white rounded">
-                                    {department.action}
-                                </button>
-                            </TableCell>
-                        </TableRow>
-                    ))}
-                </TableBody>
-                <TableFooter>
-                    <TableRow>
-                        <TableCell colSpan={5} className="text-center px-4 py-2">
-                            Total Departments: {departments.length}
-                        </TableCell>
-                    </TableRow>
-                </TableFooter>
-            </Table>
+            <ReusableTable columns={columns} data={departments} />
         </div>
     );
 }

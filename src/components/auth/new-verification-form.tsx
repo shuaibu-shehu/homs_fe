@@ -22,7 +22,6 @@ function NewVerificationForm() {
         setLoading(true)
         if (!token) return
         const res = await newVerification(token)
-        console.log("res: ", res);
         
         if (res) {
             setResponse(res)

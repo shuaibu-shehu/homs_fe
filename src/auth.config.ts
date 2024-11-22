@@ -12,7 +12,6 @@ export default {
     providers: [
     Credentials({
         async authorize(credentials: Partial<Record<string, unknown>>) {
-            console.log("credentials: ",credentials);
             const data = {
                 email: credentials?.email as string || '',
                 password: credentials?.password as string || ''
@@ -24,7 +23,7 @@ export default {
 
                     const response = await $http.post('/auth/login', data);
                     
-                    console.log("response ", response.data);
+                    // console.log("response ", response.data);
                      return {
                          accessToken: response.data.access_token,
                          refreshToken: response.data.refresh_token,
@@ -32,7 +31,11 @@ export default {
                          tokenType: response.data.token_type,
                          userId: response.data.user.uid,
                          role: response.data.user.role.toLowerCase(),
-                         name: response.data.user.name
+                         name: response.data.user.name,
+                         hospital: {
+                             id: response.data.hospital.id,
+                             name: response.data.hospital.name
+                         }
                      };
                     
                 } catch (error) {

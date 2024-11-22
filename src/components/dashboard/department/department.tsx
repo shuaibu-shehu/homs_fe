@@ -2,8 +2,13 @@ import React from 'react'
 // import DepartmentBarChart from './department-chart'
 import RealTimeOxygenConsumption from './realtime-oxygen-consumption-graph'
 import DepartmentList from './departments-list'
+import { currentUser } from '@/lib/auth';
 
-function Department() {
+async function Department() {
+  
+  const user = await currentUser();
+  console.log(user);
+  
   return (
     <div className='w-full min-h-screen'>
       {/* <DepartmentBarChart /> */}
