@@ -1,6 +1,5 @@
 import React from 'react';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../ui/table';
-import { cn } from '@/lib/utils';
 
 interface Column {
     header: string;
@@ -31,7 +30,7 @@ const CustomeTable = <T extends Record<string, unknown>>({ columns, data }: Reus
                         {columns.map((column, colIndex) => (
                             <TableCell key={colIndex} className="px-4 py-2">
                                 {column.render
-                                    ? column.render(row[column.accessor as keyof T])
+                                    ? column.render(row)
                                     : String(row[column.accessor as keyof T])}
                             </TableCell>
                         ))}

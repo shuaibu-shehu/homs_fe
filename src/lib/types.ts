@@ -1,4 +1,4 @@
-import {measureMemory} from "vm"
+// import {measureMemory} from "vm"
 import z from "zod"
 
 export const FormSchema = z.object({
@@ -18,7 +18,7 @@ export const HospitalOnboardingFormSchema = z.object({
     .describe("Contact Phone")
     .min(10, "Contact Phone must be at least 10 characters long."),
   address: z.string().describe("Address").optional(),
-})
+}) 
 
 export const SignUpFormSchema = z
   .object({
@@ -106,3 +106,52 @@ export const AddStaffSchema = z.object({
   contact: z.string().nonempty("Contact is required"),
   email: z.string().email("Invalid email address").nonempty("Email is required"),
 });
+
+
+export interface User {
+  id: string;
+  email: string;
+  name: string;
+  password: string;
+  status: string | null;
+  contact: string | null;
+  verified: boolean;
+  role: string;
+  hospitalId: string;
+  hospital: string | null;
+  departmentId: string | null;
+  department: string | null;
+  createdAt: string;
+  updatedAt: string;
+}
+
+
+export type Department = {
+  id?: string;
+  name?: string;
+  hospitalId?: string;
+  users?: User[]; // Adjust the type as needed
+  staffs?: number;
+  patients?: number;
+  active?: boolean;
+  hospital?: any; // Adjust the type as needed
+  createdAt?: string;
+  updatedAt?: string;
+  status?: boolean;
+};
+
+
+export interface AdminStore {
+  hospitals: Record<string, any>;
+  departments: Department[];
+  users: User[];
+  loading: boolean;
+  setHospitals: (hospital: any) => void;
+  setDepartments: (departments: any) => void;
+  setUsers: (users: any) => void;
+  setLoading: (isLoading: boolean) => void;
+  addDepartment: (department: Department) => void;
+  deleteDepartment: (departmentId: string) => void;
+  addStaffToDepartment: (departmentId: string, staff: User) => void;
+  // ... other properties
+};

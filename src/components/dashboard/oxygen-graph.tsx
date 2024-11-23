@@ -3,11 +3,14 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsive
 
 // Simulate fetching data from a database
 async function fetchDepartmentData() {
-    // Simulated dynamic database response
+    // Simulated dynamic database response with more data points
     return Promise.resolve([
-        { department: 'pediatrics', data: [80, 90, 85, 95], color: '#FF5733' },
-        { department: 'radiology', data: [30, 35, 40, 45], color: '#33FF57' },
-        { department: 'pharmacy', data: [50, 55, 60, 65], color: '#3357FF' },
+        { department: 'pediatrics', data: [80, 90, 85, 95, 88, 92, 91, 87, 93, 89], color: '#FF5733' },
+        { department: 'radiology', data: [30, 35, 40, 45, 50, 55, 60, 65, 70, 75], color: '#33FF57' },
+        { department: 'pharmacy', data: [50, 55, 60, 65, 70, 75, 80, 85, 90, 95], color: '#3357FF' },
+        { department: 'cardiology', data: [60, 65, 70, 75, 80, 85, 90, 95, 100, 105], color: '#FF33A1' },
+        { department: 'neurology', data: [40, 45, 50, 55, 60, 65, 70, 75, 80, 85], color: '#33A1FF' },
+        { department: 'orthopedics', data: [20, 25, 30, 35, 40, 45, 50, 55, 60, 65], color: '#A133FF' },
         // Add more departments as needed
     ]);
 }
@@ -15,6 +18,8 @@ async function fetchDepartmentData() {
 function OxygenGraph() {
     const [chartData, setChartData] = useState([]);
     const [visibleDepartments, setVisibleDepartments] = useState(new Set<string>());
+    const [currentPage, setCurrentPage] = useState(0);
+    const itemsPerPage = 5; // Number of points to display per page
 
     useEffect(() => {
         async function loadData() {
@@ -34,6 +39,9 @@ function OxygenGraph() {
         return entry;
     }) : [];
 
+    // Calculate the current data slice for pagination
+    const paginatedData = transformedData.slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage);
+
     // Toggle visibility of a department
     const toggleDepartmentVisibility = (department: string) => {
         setVisibleDepartments(prev => {
@@ -45,6 +53,11 @@ function OxygenGraph() {
             }
             return newSet;
         });
+    };
+
+    // Handle page change
+    const handlePageChange = (direction: 'next' | 'prev') => {
+        setCurrentPage(prev => direction === 'next' ? prev + 1 : Math.max(prev - 1, 0));
     };
 
     return (
@@ -65,7 +78,7 @@ function OxygenGraph() {
             <ResponsiveContainer width="100%" className='w-[700px]' height={400}>
                 <BarChart
                     className='bg-white min-w-[900px]'
-                    data={transformedData}
+                    data={paginatedData}
                     margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
                 >
                     <CartesianGrid strokeDasharray="3 3" />
@@ -84,6 +97,10 @@ function OxygenGraph() {
                     ))}
                 </BarChart>
             </ResponsiveContainer>
+            <div>
+                <button onClick={() => handlePageChange('prev')} disabled={currentPage === 0}>Previous</button>
+                <button onClick={() => handlePageChange('next')} disabled={(currentPage + 1) * itemsPerPage >= transformedData.length}>Next</button>
+            </div>
         </div>
     );
 }

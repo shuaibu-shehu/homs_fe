@@ -13,7 +13,7 @@ async function AdminDashboardPage() {
   return (
     <div>
       <h1 className='text-2xl font-bold m-4'>{user?.hospital?.name}</h1>
-      <Admin departments={departments} />
+      <Admin user = {user}  departments={departments.success ? departments.data : []  } users={users}   />
     </div>
   )
 }

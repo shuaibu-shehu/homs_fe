@@ -1,12 +1,6 @@
 import { create } from "zustand";
 
-
-export type ModalType = 'addDepartment' | 'addStaff'
-
-// interface ModalData {
-//     channelType?: ;
-
-// }
+export type ModalType = 'addDepartment' | 'addStaff' | 'deleteDepartment';
 
 interface ModalStore {
     type: ModalType | null;
@@ -21,5 +15,8 @@ export const useModal = create<ModalStore>((set) => ({
     data: {},
     isOpen: false,
     onOpen: (type, data) => set({ isOpen: true, type, data }),
-    onClose: () => set({ type: null, isOpen: false }),
+    onClose: () => set({ type: null, isOpen: false, data: {} }),
 }));
+
+
+

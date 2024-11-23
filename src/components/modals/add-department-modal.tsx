@@ -8,6 +8,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import CustomeButton from '../global/custome-button';
+import useAdminStore from '@/hooks/admin-store';
 import { useModal } from '@/hooks/modal-store';
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '../ui/select';
 import { addDepartment } from '@/lib/actions/department';
@@ -22,6 +23,7 @@ function AddDepartmentModal() {
     const { isOpen, onClose, type } = useModal();
     const isModalOpen = isOpen && type === 'addDepartment';
     const { toast } = useToast();
+    const { addDepartment: addDepartmentStore} = useAdminStore();
     const router = useRouter();
     const form = useForm<z.infer<typeof AddDepartmentSchema>>({
         mode: 'onChange',
@@ -32,11 +34,13 @@ function AddDepartmentModal() {
     const loading = form.formState.isSubmitting;
 
     const onSubmit = async (data: z.infer<typeof AddDepartmentSchema>) => {
+        
         try {
 
             const res = await addDepartment(data);
-            
-            if (res.success===true) {
+            // console.clear();
+            if (res.success === true) {
+                addDepartmentStore({ ...res.data, users: [], staffs: 0 });
                 toast({ title: 'Success', description: 'Department added successfully' });
                 router.push(`/list/departments/${res.data.id}`);
                 onClose(); // Close modal on success

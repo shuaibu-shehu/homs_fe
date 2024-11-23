@@ -9,13 +9,13 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import CustomeButton from '../global/custome-button';
 import { useModal } from '@/hooks/modal-store';
-import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '../ui/select';
 import { addStaff } from '@/lib/actions/department';
 import {  AddStaffSchema } from '@/lib/types';
 import { useToast } from '@/hooks/use-toast';
 import { signOut } from 'next-auth/react';
 import { useParams, useRouter } from 'next/navigation';
 import { Label } from '../ui/label';
+import useAdminStore from '@/hooks/admin-store';
 
 
 
@@ -26,6 +26,8 @@ function AddStafftModal() {
     const router = useRouter();
     const params = useParams();
     const departmentId = params.id;
+    const { addStaffToDepartment } = useAdminStore();
+
     const form = useForm<z.infer<typeof AddStaffSchema>>({
         mode: 'onChange',
         resolver: zodResolver(AddStaffSchema),
@@ -48,7 +50,9 @@ function AddStafftModal() {
 
             if (res.success === true) {
                 toast({ title: 'Success', description: 'Staff added successfully' });
-                router.push(`/list/departments/${res.data.id}`);
+                addStaffToDepartment(departmentId as string, res.data);
+                
+                // router.push(`/list/departments/${res.data.id}`);
                 onClose(); // Close modal on success
             }
 

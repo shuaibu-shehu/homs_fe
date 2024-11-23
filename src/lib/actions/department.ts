@@ -94,3 +94,23 @@ export const getUsersInHospital = async (hospitalId: string) => {
         return { success: false, message: "An unexpected error occurred" }
     }   
 }
+
+
+
+export const deleteDepartment = async (departmentId: string) => {
+    try {
+        const $httpWithBearer = await httpWithBearer()
+        const response = await $httpWithBearer.delete(`/departments/${departmentId}`)
+        if (response.data.success) {
+            return { success: true, ...response.data.message, status: response.status, data: response.data.data }
+        } else {
+            return { success: false, message: response.data.message }
+        }
+
+    } catch (error: unknown) {
+        if (error instanceof AxiosError && error.response) {
+            return { success: false, message: error.response.data.detail }
+        }
+        return { success: false, message: "An unexpected error occurred" }
+    }
+}

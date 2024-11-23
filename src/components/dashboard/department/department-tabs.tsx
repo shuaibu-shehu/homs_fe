@@ -1,19 +1,36 @@
 'use client'
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { CardTitle, Card, CardHeader, CardContent } from '@/components/ui/card';
-import { Droplet, Users, Settings, FileText, UserCog, Radio, LineChart } from 'lucide-react';
+import {  Users, Settings, FileText, UserCog, Radio, LineChart } from 'lucide-react';
 import OxygenConsumptionChart from './oxygen-date-consumption-chart';
 import OxygenPerPatientChart from './oxygen-patinent-chart';
 import { Separator } from '@/components/ui/separator';
 import StaffList from './staff-list';
 import CustomeSearch from '@/components/global/custome-search';
 import { Button } from '@/components/ui/button';
+import useAdminStore from '@/hooks/admin-store';
 import { useModal } from '@/hooks/modal-store';
+import { useParams } from 'next/navigation';
+import { Department } from '@/lib/types';
+import StaffManagementTable from './staff-list';
 const DepartmentTabs = () => {
+
     const { onOpen } = useModal()
+    const { departments } = useAdminStore();
+    const params = useParams();
+    const id = params.id;
+    const [currentDepartment, setCurrentDepartment] = useState<Department | null>(() => {
+        return departments.find(department => department.id === id) || null;
+    });
+
+    useEffect(() => {
+        const department = departments.find(department => department.id === id) || null;
+        setCurrentDepartment(department);
+    }, [departments, id]);
     
+    console.log(currentDepartment?.users);
     return (
         <Tabs defaultValue="overview"  className="w-full max-w-[100vw] flex flex-col  gap-4 items-center justify-center">
             <TabsList className=" mx-auto flex justify-around  w-full grid-cols-4 lg:grid-cols-8 m-5 bg-transparent">
@@ -48,7 +65,9 @@ const DepartmentTabs = () => {
                     Settings
                 </TabsTrigger>
             </TabsList>
-            <Separator  className="w-full -m-4" />
+            <Separator className="w-full -m-4" />
+            
+            <h1 className='text-2xl font-bold m-3'>{currentDepartment?.name} Department</h1>
             <TabsContent value="overview" className="space-y-7 ">
                 <div className='grid grid-cols-2 sm:grid-cols-3 gap-4 m-4'>
                     <Card>
@@ -57,30 +76,19 @@ const DepartmentTabs = () => {
                             <Users className="h-6 w-6 text-muted-foreground" />
                         </CardHeader>
                         <CardContent>
-                            <div className="text-2xl font-bold">45</div>
-                            <p className="text-xs text-muted-foreground">+2 from yesterday</p>
+                            <div className="text-2xl font-bold">{currentDepartment?.patients}</div>
+                            {/* <p className="text-xs text-muted-foreground">+2 from yesterday</p> */}
                         </CardContent>
                     </Card>
 
                     <Card>
                         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 gap-2">
-                            <CardTitle className="text-sm font-medium">Active Oxygen</CardTitle>
-                            <Droplet className="h-6 w-6 text-muted-foreground" />
-                        </CardHeader>
-                        <CardContent>
-                            <div className="text-2xl font-bold">32</div>
-                            <p className="text-xs text-muted-foreground">71% of patients</p>
-                        </CardContent>
-                    </Card>
-
-                    <Card>
-                        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 gap-2">
-                            <CardTitle className="text-sm font-medium">Staff Count</CardTitle>
+                            <CardTitle className="text-sm font-medium">Staffs</CardTitle>
                             <Users className="h-6 w-6 text-muted-foreground" />
                         </CardHeader>
                         <CardContent>
-                            <div className="text-2xl font-bold">32</div>
-                            <p className="text-xs text-muted-foreground">Full capacity</p>
+                            <div className="text-2xl font-bold">{currentDepartment?.staffs}</div>
+                            {/* <p className="text-xs text-muted-foreground">Full capacity</p> */}
                         </CardContent>
                     </Card>
                 </div>
@@ -118,14 +126,17 @@ const DepartmentTabs = () => {
                             </div>
                         </div>
                         <div className=' p-8 overflow-hidden'>
-                        <StaffList />
+
+                            {(currentDepartment?.users?.length ?? 0) > 0 ? (
+                                <StaffManagementTable staffs={currentDepartment?.users || []} />
+                            ) : (
+                                <p>No staffs found</p>
+                            )}                            
 
                         </div>
                     </CardContent>
                 </Card>
             </TabsContent>
-
-         
 
             <TabsContent value="reports">
                 <Card>
