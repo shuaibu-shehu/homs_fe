@@ -25,6 +25,7 @@ export const { handlers: { GET, POST }, signIn, signOut, auth } = NextAuth({
         token.role = user.role;
         token.type = user.tokenType;
         token.id = user.userId; // Store user ID
+        token.hospital = user.hospital;
       }
 
       return token; // Return updated token
@@ -41,6 +42,7 @@ export const { handlers: { GET, POST }, signIn, signOut, auth } = NextAuth({
         session.user.email = token.email as string;
         session.user.tokenType = token.type as string;
         session.user.userId = token.id as string;
+        session.user.hospital = token.hospital as { id: string; name: string };
       }
 
       return session; // Return updated session

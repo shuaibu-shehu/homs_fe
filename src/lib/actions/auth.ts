@@ -41,9 +41,10 @@ export const actionSignUpUser = async (values: z.infer<typeof SignUpFormSchema>)
 
 }
 
+
 export const newVerification = async (token: string) => {
     try {
-
+    
         const response = await $http.get(`/auth/verify`,
             {
                 headers: {
@@ -56,8 +57,10 @@ export const newVerification = async (token: string) => {
             return response.data as { success: boolean, message: string };
         }
     } catch (error) {
+        console.log("error: ", error.response.data.detail);
+        
         if (error instanceof AxiosError && error.response) {
-            return { success: false, message: error.response.data.detail };
+            return { success: false, message: error.response.data.detail.error };
         } else {
             return { success: false, message: "An unknown error occurred" };
         }

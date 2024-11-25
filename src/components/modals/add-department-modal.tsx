@@ -8,23 +8,24 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import CustomeButton from '../global/custome-button';
-import axios from 'axios';
+import useAdminStore from '@/hooks/admin-store';
 import { useModal } from '@/hooks/modal-store';
+import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '../ui/select';
+import { addDepartment } from '@/lib/actions/department';
+import { AddDepartmentSchema } from '@/lib/types';
+import { useToast } from '@/hooks/use-toast';
+import { signOut } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 
-// Schema for validation
-const AddDepartmentSchema = z.object({
-    name: z.string().nonempty('Department name is required'),
-        status: z.boolean()
-    });
 
-
-type AddDepartmentFormValues = z.infer<typeof AddDepartmentSchema>;
 
 function AddDepartmentModal() {
     const { isOpen, onClose, type } = useModal();
     const isModalOpen = isOpen && type === 'addDepartment';
-
-    const form = useForm<AddDepartmentFormValues>({
+    const { toast } = useToast();
+    const { addDepartment: addDepartmentStore} = useAdminStore();
+    const router = useRouter();
+    const form = useForm<z.infer<typeof AddDepartmentSchema>>({
         mode: 'onChange',
         resolver: zodResolver(AddDepartmentSchema),
         defaultValues: { name: '', status: true },
@@ -32,10 +33,28 @@ function AddDepartmentModal() {
 
     const loading = form.formState.isSubmitting;
 
-    const onSubmit = async (data: AddDepartmentFormValues) => {
+    const onSubmit = async (data: z.infer<typeof AddDepartmentSchema>) => {
+        
         try {
-            await axios.post('/api/departments', data); // Replace with your actual API endpoint
-            onClose(); // Close modal on success
+
+            const res = await addDepartment(data);
+            // console.clear();
+            if (res.success === true) {
+                addDepartmentStore({ ...res.data, users: [], staffs: 0 });
+                toast({ title: 'Success', description: 'Department added successfully' });
+                router.push(`/list/departments/${res.data.id}`);
+                onClose(); // Close modal on success
+            }
+
+            if (res.status === 403) {
+                toast({ title: 'Error', description: res.message });
+                signOut({ redirectTo: '/login' });
+            }
+
+            if (res.success === false) {
+                toast({ title: 'Error', description: res.message });
+            }
+
         } catch (error) {
             console.error('Failed to add department:', error);
         }
@@ -66,6 +85,7 @@ function AddDepartmentModal() {
                             )}
                         />
 
+                        {/* Status Select */}
                         <FormField
                             control={form.control}
                             name="status"
@@ -73,13 +93,17 @@ function AddDepartmentModal() {
                                 <FormItem>
                                     <FormControl>
                                         <Select
-                                            {...field}
-                                            value={field.value.toString()}
+                                            onValueChange={(value) => field.onChange(value === 'true')}
                                             disabled={loading}
-                                            className="input w-full p-2"
+                                            value={field.value.toString()}
                                         >
-                                            <option value="true">Active</option>
-                                            <option value="false">Inactive</option>
+                                            <SelectTrigger>
+                                                <SelectValue placeholder="Select Status" />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                <SelectItem value="true">Active</SelectItem>
+                                                <SelectItem value="false">Inactive</SelectItem>
+                                            </SelectContent>
                                         </Select>
                                     </FormControl>
                                     <FormMessage />
@@ -92,7 +116,7 @@ function AddDepartmentModal() {
                                 <Button disabled={loading} onClick={onClose} variant="ghost">
                                     Cancel
                                 </Button>
-                                <CustomeButton isLoading={loading}>
+                                <CustomeButton type="submit" isLoading={loading}>
                                     Add Department
                                 </CustomeButton>
                             </div>

@@ -1,9 +1,19 @@
 import Admin from '@/components/dashboard/admin'
+import { getDepartments, getUsersInHospital } from '@/lib/actions/department'
+import { currentUser } from '@/lib/auth'
 import React from 'react'
-function AdminDashboardPage() {
+async function AdminDashboardPage() {
+  
+  const user = await currentUser()
+  
+  const departments = await getDepartments()
+   
+  const users = await getUsersInHospital(user?.hospital?.id)
+  
   return (
-      <div>
-          <Admin />
+    <div>
+      <h1 className='text-2xl font-bold m-4'>{user?.hospital?.name}</h1>
+      <Admin user = {user}  departments={departments.success ? departments.data : []  } users={users}   />
     </div>
   )
 }

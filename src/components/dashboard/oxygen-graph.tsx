@@ -1,120 +1,108 @@
-import React, { useState } from 'react';
-import { Bar } from 'react-chartjs-2';
-import {
-    Chart as ChartJS,
-    BarElement,
-    CategoryScale,
-    LinearScale,
-    Legend,
-    Tooltip,
-} from 'chart.js';
+import React, { useState, useEffect } from 'react';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
-// Register required components for Chart.js
-ChartJS.register(BarElement, CategoryScale, LinearScale, Legend, Tooltip);
+// Simulate fetching data from a database
+async function fetchDepartmentData() {
+    // Simulated dynamic database response with more data points
+    return Promise.resolve([
+        { department: 'pediatrics', data: [80, 90, 85, 95, 88, 92, 91, 87, 93, 89], color: '#FF5733' },
+        { department: 'radiology', data: [30, 35, 40, 45, 50, 55, 60, 65, 70, 75], color: '#33FF57' },
+        { department: 'pharmacy', data: [50, 55, 60, 65, 70, 75, 80, 85, 90, 95], color: '#3357FF' },
+        { department: 'cardiology', data: [60, 65, 70, 75, 80, 85, 90, 95, 100, 105], color: '#FF33A1' },
+        { department: 'neurology', data: [40, 45, 50, 55, 60, 65, 70, 75, 80, 85], color: '#33A1FF' },
+        { department: 'orthopedics', data: [20, 25, 30, 35, 40, 45, 50, 55, 60, 65], color: '#A133FF' },
+        // Add more departments as needed
+    ]);
+}
 
-const OxygenGraph = () => {
-    // Sample data
-    const overallData = [200, 220, 210, 230]; // Total hospital usage
-    const icuData = [100, 110, 105, 115];
-    const pediatricsData = [80, 90, 85, 95];
-    const surgeryData = [20, 20, 20, 20];
-    const radiologyData = [30, 35, 40, 45];
-    const pharmacyData = [50, 55, 60, 65];
+function OxygenGraph() {
+    const [chartData, setChartData] = useState([]);
+    const [visibleDepartments, setVisibleDepartments] = useState(new Set<string>());
+    const [currentPage, setCurrentPage] = useState(0);
+    const itemsPerPage = 5; // Number of points to display per page
 
-    const [showOverall, setShowOverall] = useState(true);
+    useEffect(() => {
+        async function loadData() {
+            const data = await fetchDepartmentData();
+            setChartData(data);
+            setVisibleDepartments(new Set(data.map(item => item.department)));
+        }
+        loadData();
+    }, []);
 
-    // Chart data
-    const data = {
-        labels: ['12:00 AM', '6:00 AM', '12:00 PM', '6:00 PM'], // Time intervals
-        datasets: showOverall
-            ? [
-                {
-                    label: 'Overall Hospital',
-                    data: overallData,
-                    backgroundColor: 'rgba(0, 128, 0, 0.6)',
-                    borderColor: 'green',
-                    borderWidth: 1,
-                },
-            ]
-            : [
-                {
-                    label: 'ICU',
-                    data: icuData,
-                    backgroundColor: 'rgba(255, 99, 132, 0.6)',
-                    borderColor: 'red',
-                    borderWidth: 1,
-                },
-                {
-                    label: 'Pediatrics',
-                    data: pediatricsData,
-                    backgroundColor: 'rgba(54, 162, 235, 0.6)',
-                    borderColor: 'blue',
-                    borderWidth: 1,
-                },
-                {
-                    label: 'Surgery',
-                    data: surgeryData,
-                    backgroundColor: 'rgba(255, 159, 64, 0.6)',
-                    borderColor: 'orange',
-                    borderWidth: 1,
-                },
-                {
-                    label: 'Radiology',
-                    data: radiologyData,
-                    backgroundColor: 'rgba(153, 102, 255, 0.6)',
-                    borderColor: 'purple',
-                    borderWidth: 1,
-                },
-                {
-                    label: 'Pharmacy',
-                    data: pharmacyData,
-                    backgroundColor: 'rgba(75, 192, 192, 0.6)',
-                    borderColor: 'teal',
-                    borderWidth: 1,
-                },
-            ],
+    // Transform data for Recharts
+    const transformedData = chartData.length > 0 ? chartData[0].data.map((_, index) => {
+        const entry: any = { name: `Point ${index + 1}` };
+        chartData.forEach((item) => {
+            entry[item.department] = item.data[index];
+        });
+        return entry;
+    }) : [];
+
+    // Calculate the current data slice for pagination
+    const paginatedData = transformedData.slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage);
+
+    // Toggle visibility of a department
+    const toggleDepartmentVisibility = (department: string) => {
+        setVisibleDepartments(prev => {
+            const newSet = new Set(prev);
+            if (newSet.has(department)) {
+                newSet.delete(department);
+            } else {
+                newSet.add(department);
+            }
+            return newSet;
+        });
     };
 
-    const options = {
-        responsive: true,
-        plugins: {
-            legend: {
-                position: 'top' as const,
-                labels: {
-                    usePointStyle: true,
-                },
-            },
-            tooltip: {
-                mode: 'index' as const,
-                intersect: false,
-            },
-        },
-        scales: {
-            x: {
-                grid: { display: false },
-            },
-            y: {
-                beginAtZero: true,
-            },
-        },
+    // Handle page change
+    const handlePageChange = (direction: 'next' | 'prev') => {
+        setCurrentPage(prev => direction === 'next' ? prev + 1 : Math.max(prev - 1, 0));
     };
 
     return (
-        <div className="p-4 bg-green rounded-lg w-[100%]  shadow-md">
-            {/* Toggle Button */}
-            <div className="flex justify-end mb-4">
-                <button
-                    onClick={() => setShowOverall(!showOverall)}
-                    className="px-4 py-2 bg-blue-500 text-white rounded-md"
-                >
-                    {showOverall ? 'View By Department' : 'View Overall'}
-                </button>
+        <div>
+            <h2>Oxygen Levels by Department</h2>
+            <div>
+                {chartData.map(item => (
+                    <label key={item.department} style={{ marginRight: '10px' }}>
+                        <input
+                            type="checkbox"
+                            checked={visibleDepartments.has(item.department)}
+                            onChange={() => toggleDepartmentVisibility(item.department)}
+                        />
+                        {item.department}
+                    </label>
+                ))}
             </div>
-
-            {/* Chart */}
-            <Bar data={data} options={options} />
+            <ResponsiveContainer width="100%" className='w-[700px]' height={400}>
+                <BarChart
+                    className='bg-white min-w-[900px]'
+                    data={paginatedData}
+                    margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+                >
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="name" />
+                    <YAxis />
+                    <Tooltip />
+                    <Legend />
+                    {chartData.map((item) => (
+                        visibleDepartments.has(item.department) && (
+                            <Bar
+                                key={item.department}
+                                dataKey={item.department}
+                                fill={item.color}
+                            />
+                        )
+                    ))}
+                </BarChart>
+            </ResponsiveContainer>
+            <div>
+                <button onClick={() => handlePageChange('prev')} disabled={currentPage === 0}>Previous</button>
+                <button onClick={() => handlePageChange('next')} disabled={(currentPage + 1) * itemsPerPage >= transformedData.length}>Next</button>
+            </div>
         </div>
     );
-};
+}
 
 export default OxygenGraph;

@@ -1,7 +1,9 @@
 import Department from '@/components/dashboard/department/department'
 import React from 'react'
 
-function page() {
+async function page() {
+
+  
   return (
     <div><Department /></div>
   )
