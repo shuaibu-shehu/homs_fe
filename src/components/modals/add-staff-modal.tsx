@@ -13,7 +13,7 @@ import { addStaff } from '@/lib/actions/department';
 import {  AddStaffSchema } from '@/lib/types';
 import { useToast } from '@/hooks/use-toast';
 import { signOut } from 'next-auth/react';
-import { useParams, useRouter } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import { Label } from '../ui/label';
 import useAdminStore from '@/hooks/admin-store';
 
@@ -23,7 +23,6 @@ function AddStafftModal() {
     const { isOpen, onClose, type } = useModal();
     const isModalOpen = isOpen && type === 'addStaff';
     const { toast } = useToast();
-    const router = useRouter();
     const params = useParams();
     const departmentId = params.id;
     const { addStaffToDepartment } = useAdminStore();

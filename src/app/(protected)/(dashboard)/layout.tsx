@@ -2,7 +2,6 @@
 // import Navbar from "@/components/Navbar";
 import Menu from "@/components/dashboard/menu";
 import Navbar from "@/components/dashboard/navbar";
-// import { currentUser } from "@/lib/auth";
 import Image from "next/image";
 import Link from "next/link";
 // import { redirect } from 'next/navigation';
@@ -12,7 +11,6 @@ export default async function DashboardLayout({
 }: Readonly<{
     children: React.ReactNode;
 }>) {
-
 
     return (
         <div className="h-screen flex">

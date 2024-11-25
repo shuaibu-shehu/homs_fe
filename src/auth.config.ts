@@ -23,13 +23,14 @@ export default {
 
                     const response = await $http.post('/auth/login', data);
                     
-                    // console.log("response ", response.data);
+                    console.log("response login: ", response.data);
                      return {
                          accessToken: response.data.access_token,
                          refreshToken: response.data.refresh_token,
                          email: response.data.user.email,
                          tokenType: response.data.token_type,
                          userId: response.data.user.uid,
+                         departmentId: response.data.user.department_id,
                          role: response.data.user.role.toLowerCase(),
                          name: response.data.user.name,
                          hospital: {

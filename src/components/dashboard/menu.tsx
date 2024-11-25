@@ -25,7 +25,7 @@ const menuItems = [
             {
                 icon: <Home size={20} className="min-h-[20px] min-w-[20px]" />,
                 label: "Home",
-                href: "/admin",
+                href: "/home",
                 visible: ["admin", "nurse", "doctor", "therapist", "technician", "system-admin"],
             },
             {
@@ -105,7 +105,9 @@ const Menu = () => {
     const [currentPath, setCurrentPath] = useState("/"+pathname.split("/")[2]);
     // const role = "admin"
 
-useEffect(() => {
+    useEffect(() => {
+    console.log("role: ", role);
+    
     setCurrentPath("/"+pathname.split("/")[2]);
         
 }, [pathname, currentPath]);

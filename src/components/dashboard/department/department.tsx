@@ -3,11 +3,8 @@ import React from 'react'
 // import DepartmentBarChart from './department-chart'
 import RealTimeOxygenConsumption from './realtime-oxygen-consumption-graph'
 import DepartmentList from './departments-list'
-import { currentUser } from '@/lib/auth';
-import useAdminStore from '@/hooks/admin-store';
 
 function Department() {
-  const { departments } = useAdminStore();
   
   return (
     <div className='w-full min-h-screen'>

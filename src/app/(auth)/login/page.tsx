@@ -1,5 +1,4 @@
 import LoginForm from "@/components/auth/login-form"
-import {Footer} from "@/components/footer"
 import {PageWrapper} from "@/components/pagewrapper"
 import React from "react"
 
