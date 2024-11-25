@@ -6,7 +6,7 @@ import {Toaster} from "@/components/ui/toaster"
 import {SessionProvider} from "next-auth/react"
 import {auth} from "@/auth"
 import {ModalProvider} from "@/components/providers/modals-provider"
-// import {Footer} from "@/components/footer"
+import {Footer} from "@/components/footer"
 
 // Use Poppins font from Google Fonts
 const poppins = Poppins({
@@ -39,7 +39,7 @@ export default async function RootLayout({
 
           <main className='flex-grow'>{children}</main>
 
-          {/* <Footer /> */}
+          <Footer />
           <Toaster />
         </SessionProvider>
       </body>

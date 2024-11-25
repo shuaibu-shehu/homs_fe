@@ -4,7 +4,7 @@ export const publicRoutes = [
     "/about",
     "/add-new-hospital",
     "/merchants",
-    
+    "/contact",
        
 ] 
 
