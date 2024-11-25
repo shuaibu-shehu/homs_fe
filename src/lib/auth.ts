@@ -1,10 +1,6 @@
 'use server'
 
-// const { cookies } = require("next/headers")
-// import { cookies } from "next/headers";
-
 import { auth } from "@/auth";
-
 
 export const currentUser = async () => {
     const session = await auth();
@@ -38,3 +34,8 @@ export const getRefreshToken = async () => {
     return session?.refresh_token;  
 
 }
+
+// export const useAuth = () => {
+//     const session = useSession();
+//     return session.data.;
+// }

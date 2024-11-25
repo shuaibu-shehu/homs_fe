@@ -9,8 +9,7 @@ export default function Home() {
         <Hero />
       </div>
       <Features />
-
-      <Contact />
+      {/* <Contact /> */}
     </div>
   )
 }

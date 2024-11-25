@@ -33,7 +33,14 @@ export const useAdminStore = create<AdminStore>()(
                     users: department.id === departmentId ? [...(department.users || []), staff] : department.users
                 }));
                 set({ departments: updatedDepartments });
+            },
+            deleteStaffFromDepartment: (departmentId: string, staffId: string) => {
+                const currentDepartments = get().departments;
+                set({ departments: currentDepartments.map(department => ({
+                    ...department, users: department.id === departmentId ? department.users?.filter(user => user.id !== staffId) : department.users
+                })) });
             }
+
         }),
         {
             name: "admin-store",

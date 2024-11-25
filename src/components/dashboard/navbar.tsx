@@ -1,7 +1,9 @@
 import Image from "next/image"
 import AvatarDropdown from "../avatar-dropdown"
-
-const Navbar = () => {
+import { currentUser } from "@/lib/auth"
+import CurrentTime from "./current-time"
+const Navbar = async () => {
+    const user = await currentUser()
     return (
         <div className='flex items-center justify-between p-4'>
             {/* SEARCH BAR */}
@@ -19,11 +21,12 @@ const Navbar = () => {
                     <div className='absolute -top-3 -right-3 w-5 h-5 flex items-center justify-center bg-purple-500 text-white rounded-full text-xs'>1</div>
                 </div>
                 <div className='flex flex-col'>
-                    <span className="text-xs leading-3 font-medium">John Doe</span>
-                    <span className="text-[10px] text-gray-500 text-right">Admin</span>
+                    <span className="text-xs leading-3 font-medium">{user?.name}</span>
+                    <span className="text-[10px] text-gray-500 text-right">{user?.role}</span>
                 </div>
                 <AvatarDropdown />
             </div>
+            {/* <CurrentTime /> */}
         </div>
     )
 }

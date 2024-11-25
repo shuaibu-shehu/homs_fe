@@ -2,9 +2,9 @@
 // import { getUsers } from '@/lib/actions/hospital';
 // import { currentUser } from '@/lib/auth';
 import React, { useEffect } from 'react'
-import UserCard from '../user-card'
+import UserCard from '../../user-card'
 // import { MoveUp } from 'lucide-react'
-import RealtimeUsageCard from './realtime_usage-card'
+import RealtimeUsageCard from '../realtime_usage-card'
 // import dynamic from "next/dynamic";
 // import OxygenPieChart from './piechart-oxygen';
 import NotificationsAndAlerts from './notifications-and-alerts';
@@ -18,11 +18,11 @@ import { Department } from '@/lib/types';
 
 function Admin({ departments, users, user }: { departments: Department[], users: any, user: any }) {
   const { setHospitals, setDepartments, setUsers } = useAdminStore();
-  
+
   useEffect(() => {
     setHospitals(user.hospital);
-    if(departments.length > 0){
-      const departmentsWithStaffs = departments.map((department: Department) => ({ ...department, staffs: department.users.length }));
+    if (departments.length > 0) {
+      const departmentsWithStaffs = departments.map((department: Department) => ({ ...department, staffs: department.users?.length }));
       setDepartments(departmentsWithStaffs);
     }
     setUsers(users);
@@ -37,7 +37,7 @@ function Admin({ departments, users, user }: { departments: Department[], users:
           <RealtimeUsageCard />
         </div>
         <div className='flex flex-col mx-auto items-center justify-center xl:justify-around xl:flex-row flex-grow  w-[100%]'>
-          <OxygenGraph departments={departments as Department[]}/>
+          <OxygenGraph departments={departments as Department[]} />
         </div>
         <div>
           {/* <ForecastWidget /> */}

@@ -13,23 +13,22 @@ import Link from "next/link"
 import {actionLoginInUser} from "@/lib/actions/auth"
 // import { useAuth } from '../providers/authProvider';
 import {useToast} from "@/hooks/use-toast"
-
 function LoginForm() {
   const {toast} = useToast()
+ 
   const form = useForm<z.infer<typeof LoginFormSchema>>({
     mode: "onChange",
     resolver: zodResolver(LoginFormSchema),
     defaultValues: {email: "", password: ""},
   })
-
   const loading = form.formState.isSubmitting
 
   const onSubmit = async (data: z.infer<typeof LoginFormSchema>) => {
     try {
       const res = await actionLoginInUser(data)
 
-      console.log(res)
       if (res?.success) {
+        window.location.href = `/list/home`
         toast({
           title: "Login successful",
           description: "You have successfully logged in",

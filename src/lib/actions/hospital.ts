@@ -28,13 +28,11 @@ export const getUsers = async () => {
                 },
             }
         );
-        console.log("response: ", response.data);
         if (response.data.success) {
             return response.data as { success: boolean, message: string };
         }
     } catch (error) {
         
-        console.log("error: ", error);
         
         if (error instanceof AxiosError && error.response) {
             return { success: false, message: error.response.data.detail };

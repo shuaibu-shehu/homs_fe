@@ -3,14 +3,11 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsive
 
 // Simulate fetching data from a database
 async function fetchDepartmentData() {
-    // Simulated dynamic database response with more data points
+    // Simulated dynamic database response
     return Promise.resolve([
-        { department: 'pediatrics', data: [80, 90, 85, 95, 88, 92, 91, 87, 93, 89], color: '#FF5733' },
-        { department: 'radiology', data: [30, 35, 40, 45, 50, 55, 60, 65, 70, 75], color: '#33FF57' },
-        { department: 'pharmacy', data: [50, 55, 60, 65, 70, 75, 80, 85, 90, 95], color: '#3357FF' },
-        { department: 'cardiology', data: [60, 65, 70, 75, 80, 85, 90, 95, 100, 105], color: '#FF33A1' },
-        { department: 'neurology', data: [40, 45, 50, 55, 60, 65, 70, 75, 80, 85], color: '#33A1FF' },
-        { department: 'orthopedics', data: [20, 25, 30, 35, 40, 45, 50, 55, 60, 65], color: '#A133FF' },
+        { department: 'pediatrics', data: [80, 90, 85, 95], color: '#FF5733' },
+        { department: 'radiology', data: [30, 35, 40, 45], color: '#33FF57' },
+        { department: 'pharmacy', data: [50, 55, 60, 65], color: '#3357FF' },
         // Add more departments as needed
     ]);
 }

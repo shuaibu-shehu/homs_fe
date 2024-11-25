@@ -153,5 +153,62 @@ export interface AdminStore {
   addDepartment: (department: Department) => void;
   deleteDepartment: (departmentId: string) => void;
   addStaffToDepartment: (departmentId: string, staff: User) => void;
+  deleteStaffFromDepartment: (departmentId: string, staffId: string) => void;
   // ... other properties
 };
+
+export interface StaffStore {
+  dailyOxygenConsumption : DailyOxygenConsumption;
+  setDailyOxygenConsumption: (dailyOxygenConsumption: DailyOxygenConsumption) => void;
+  updateDailyOxygenConsumption: (dailyOxygenConsumption: DailyOxygenConsumption, type: "add" | "subtract") => void;
+  hospital: Record<string, any>;
+  department?: Department;
+  loading: boolean;
+  setHospital: (hospital: any) => void;
+  setDepartment: (department: Department) => void;
+  setLoading: (isLoading: boolean) => void;
+  oxygenEntries: OxygenEntry[]
+  setOxygenEntries: (oxygenEntries: OxygenEntry[]) => void;
+  addOxygenEntry: (oxygenEntry: OxygenEntry) => void;
+  deleteOxygenEntry: (oxygenEntryId: string) => void;
+  editOxygenEntry: (newOxygenEntry: OxygenEntry) => void;
+}
+
+export type OxygenEntry = {
+  id?: string | number;
+  department_id?: string;
+  bed_number?: string;
+  nurse_id?: string;
+  sensor_id?: string | null;
+  oxygen_consumption?: number;
+  is_first_time_usage?: boolean;
+  timestamp?: string;
+  remarks?: string;
+  daily_oxygen_consumption_id?: string;
+};
+
+export interface OxygenStore {
+  oxygenEntries: OxygenEntry[];
+  setOxygenEntries: (oxygenEntries: OxygenEntry[]) => void;
+  addOxygenEntry: (oxygenEntry: OxygenEntry) => void;
+  deleteOxygenEntry: (oxygenEntryId: string) => void;
+}
+
+
+
+export const AddOxygenEntrySchema = z.object({
+  totalConsumption: z.number().min(1, "Total oxygen must be at least 1"),
+  bedNumber: z.string().min(1, "Bed number is required"),
+  isFirstTimeUsage: z.boolean(),
+  remarks: z.string(),
+});
+
+export interface DailyOxygenConsumption {
+  id?: string;
+  date?: string;
+  department?: null | Department;
+  department_id?: string;
+  last_updated?: string;
+  patients_count?: number;
+  total_consumption?: number;
+}

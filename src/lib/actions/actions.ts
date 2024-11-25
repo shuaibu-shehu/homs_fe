@@ -26,7 +26,6 @@ export const actionAddHospital = async (values:z.infer<typeof HospitalOnboarding
         }
         
         const response = await $http.post('/hospital/onboard', data)
-        console.log("response: ", response.data)
         if (response.status === 201) {
             return { success:true, ...response.data, status: response.status }
         }
