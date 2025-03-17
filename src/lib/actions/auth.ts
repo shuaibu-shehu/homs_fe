@@ -58,7 +58,9 @@ export const newVerification = async (token: string) => {
     } catch (error) {
 
         if (error instanceof AxiosError && error.response) {
-            return { success: false, message: error.response.data.detail.error };
+            console.log("error from catch: ", error.response.data.detail);
+            
+            return { success: false, message: error.response.data.detail };
         } else {
             return { success: false, message: "An unknown error occurred" };
         }
