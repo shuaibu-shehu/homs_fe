@@ -11,11 +11,13 @@ import {
     Settings,
     LogOut,
     Building,
+    Bed,
 } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
+import { ModeToggle } from "../theme-toggle";
 
 
 const menuItems = [
@@ -38,6 +40,12 @@ const menuItems = [
                 icon: <Users size={20} className="min-h-[20px] min-w-[20px]" />,
                 label: "Patients",
                 href: "/patients",
+                visible: ["admin", "nurse", "doctor"],
+            },
+            {
+                icon: <Bed size={20} className="min-h-[20px] min-w-[20px]" />,
+                label: "Beds",
+                href: "/beds",
                 visible: ["admin", "nurse", "doctor"],
             },
             {
@@ -106,14 +114,11 @@ const Menu = () => {
     // const role = "admin"
 
     useEffect(() => {
-    console.log("role: ", role);
-    
-    setCurrentPath("/"+pathname.split("/")[2]);
-        
-}, [pathname, currentPath]);
-    
+        setCurrentPath("/" + pathname.split("/")[2]);
+    }, [pathname, currentPath]);
+
     return (
-        <div className="mt-4 space-y-10 py-4 flex flex-col   max-h-full overflow-auto">
+        <div className="mt-4 space-y-10 py-4 flex justify-between  flex-col min-h-[90%] my-3 overflow-auto ">
             {menuItems.map((i) => (
                 <div className="flex flex-col gap-2 h-full" key={i.title}>
                     <span className="hidden lg:block text-gray-400 font-light my-4">
@@ -139,6 +144,9 @@ const Menu = () => {
                     </div>
                 </div>
             ))}
+            <div className="relative bottom-6">
+                <ModeToggle />
+            </div>
         </div>
 
     );

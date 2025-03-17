@@ -22,6 +22,8 @@ function Admin({ departments, users, user }: { departments: Department[], users:
   useEffect(() => {
     setHospitals(user.hospital);
     if (departments.length > 0) {
+      console.log("departments: ", departments);
+      
       const departmentsWithStaffs = departments.map((department: Department) => ({ ...department, staffs: department.users?.length }));
       setDepartments(departmentsWithStaffs);
     }

@@ -4,10 +4,8 @@ import { z } from "zod";
 import { LoginFormSchema, SignUpFormSchema } from "../types";
 import { Calls } from "./axios";
 import { signIn } from "../../auth";
-// import { DEFAULT_LOGIN_REDIRECT } from "../../routes";
 import { AuthError } from "next-auth";
 import { AxiosError } from "axios";
-// import { redirect } from "next/navigation";
 
 
 const url = process.env.API_URL;
@@ -66,7 +64,7 @@ export const newVerification = async (token: string) => {
 }
 
 export const actionLoginInUser = async (values: z.infer<typeof LoginFormSchema>) => {
-   
+
     const validateFields = LoginFormSchema.safeParse(values);
 
     if (!validateFields.success) {
@@ -76,7 +74,7 @@ export const actionLoginInUser = async (values: z.infer<typeof LoginFormSchema>)
     try {
 
         const { email, password } = validateFields.data;
-        
+
         const response = await $http.post(`/auth/login`,
 
             {
@@ -93,8 +91,8 @@ export const actionLoginInUser = async (values: z.infer<typeof LoginFormSchema>)
                     password,
                     redirect: false
                 });
-            
-            if (!signInResponse?.error) {                
+
+            if (!signInResponse?.error) {
                 return { success: true, message: "Login successful", data: response.data.user };
             }
 

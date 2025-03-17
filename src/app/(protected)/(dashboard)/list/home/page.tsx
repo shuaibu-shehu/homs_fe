@@ -8,7 +8,7 @@ async function AdminDashboardPage() {
   const user = await currentUser()
   
   return (
-    <div>
+    <div className='dark:bg-gray-900'>
       <h1 className='text-2xl font-bold m-4'>{user?.hospital?.name}</h1>
       {user?.role === "admin" && <AdminPage />}
       {user?.role === "nurse" && <NursePage />}

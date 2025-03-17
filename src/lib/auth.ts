@@ -15,11 +15,6 @@ export const currentRole = async () => {
     
 }
 
-// export const userRole = async () => {
-//     const session = await auth();
-
-//     return session?.user.role;
-// }
 
 export const getAccessToken = async () => {
     const session = await auth();
@@ -34,8 +29,3 @@ export const getRefreshToken = async () => {
     return session?.refresh_token;  
 
 }
-
-// export const useAuth = () => {
-//     const session = useSession();
-//     return session.data.;
-// }

@@ -4,7 +4,6 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, Di
 import { Button } from '../ui/button';
 import { useModal } from '@/hooks/modal-store';
 import { useToast } from '@/hooks/use-toast';
-import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import useStaffStore from '@/hooks/staff-store';
 import { deleteOxygenEntry as deleteOxygenEntryAction } from '@/lib/actions/department';

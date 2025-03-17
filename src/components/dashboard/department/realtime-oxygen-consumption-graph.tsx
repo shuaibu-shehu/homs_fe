@@ -90,9 +90,7 @@ const RealTimeOxygenConsumption = () => {
         },
     };
 
-    return <div className="p-4 bg-green rounded-lg w-[100%]  shadow-md">
-
-    
+    return <div className="p-4 bg-white dark:bg-gray-800 rounded-lg w-[100%]  shadow-md">
     <Bar className='w-full' data={chartData} options={options} />;
 </div>
 };

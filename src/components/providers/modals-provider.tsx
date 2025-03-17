@@ -8,6 +8,8 @@ import DeleteDepartmentModal from "../modals/delete-department-modal"
 import DeleteStaffModal from "../modals/delete-staff-modal"
 import AddOxygenEntryModal from "../modals/add-oxygen-entry-modal"
 import DeleteOxygenEntryModal from "../modals/delete-oxygen-entry-modal"
+import AddBedModal from "../modals/add-bed-modal"
+import DeleteBedModal from "../modals/delete-bed-modal"
 
 export const ModalProvider = () => {
     const [isMounted, setIsMounted] = React.useState(false)
@@ -28,6 +30,8 @@ export const ModalProvider = () => {
             <AddStaffModal />
             <AddOxygenEntryModal />
             <DeleteOxygenEntryModal />
+            <AddBedModal />
+            <DeleteBedModal />
         </>
     )
 }

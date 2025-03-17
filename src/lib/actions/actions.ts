@@ -12,7 +12,7 @@ const url = process.env.API_URL
 const $http = Calls(url)
 
 
-export const actionAddHospital = async (values:z.infer<typeof HospitalOnboardingSchema>) => { 
+export const actionAddHospital = async (values: z.infer<typeof HospitalOnboardingSchema>) => {
     try {
         const data = {
             "name": values.hospitalName,
@@ -24,13 +24,13 @@ export const actionAddHospital = async (values:z.infer<typeof HospitalOnboarding
             "state": values.state,
             "country": values.country
         }
-        
+
         const response = await $http.post('/hospital/onboard', data)
         if (response.status === 201) {
-            return { success:true, ...response.data, status: response.status }
+            return { success: true, ...response.data, status: response.status }
         }
-    } catch (error: AxiosError | any) {
-        if (error.response) {
+    } catch (error: unknown) {
+        if (error instanceof AxiosError && error.response) {
             return { success: false, ...error.response.data, status: error.response.status };
         } else {
             // Handle cases where error.response is undefined (e.g., network error)

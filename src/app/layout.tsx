@@ -7,6 +7,7 @@ import {SessionProvider} from "next-auth/react"
 import {auth} from "@/auth"
 import {ModalProvider} from "@/components/providers/modals-provider"
 import {Footer} from "@/components/footer"
+import { ThemeProvider } from "@/components/theme-provider"
 
 // Use Poppins font from Google Fonts
 const poppins = Poppins({
@@ -31,17 +32,25 @@ export default async function RootLayout({
   return (
     <html lang='en'>
       <body
+        suppressHydrationWarning
         className={`${poppins.variable} antialiased marker:bg-slate-600`} // Apply the Poppins font globally
       >
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
         <SessionProvider session={session}>
           <ModalProvider />
           {session?.user ? <h1></h1> : <Header />}
 
           <main className='flex-grow'>{children}</main>
 
-          <Footer />
+          {!session?.user && <Footer />}
           <Toaster />
         </SessionProvider>
+        </ThemeProvider>
       </body>
     </html>
   )

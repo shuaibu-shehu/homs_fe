@@ -31,16 +31,16 @@ function DepartmentList() {
                     <DropdownMenuTrigger>
                         <MoreHorizontalIcon className='cursor-pointer' />
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent className='text-xs'>
+                    <DropdownMenuContent className='text-xs dark:bg-gray-700'>
                         <DropdownMenuItem className='text-xs'>
-                            <Button variant='ghost' className='w-full text-black h-[30px] text-xs bg-transparent'>
+                            <Button variant='ghost' className='w-full dark:text-white dark:hover:bg-gray-600 text-black h-[30px] text-xs bg-transparent'>
                                 <Link className='w-full text-center -p-[5px] ' href={`/list/departments/${row.id as string}`}>View</Link>
                             </Button>
                         </DropdownMenuItem>
                         <DropdownMenuItem className='text-xs '>
                             <Button
                                 onClick={() => onOpen('deleteDepartment', { departmentId: row.id })}
-                                variant='destructive' className='w-full h-[30px] text-black text-xs'>Delete</Button>
+                                variant='destructive' className='w-full bg-transparent dark:hover:bg-gray-600 text-red-500 h-[30px] text-xs'>Delete</Button>
                         </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
@@ -49,14 +49,14 @@ function DepartmentList() {
     ];
     
     return (
-        <div className="py-4 bg-white">
+        <div className="py-4 bg-white dark:bg-gray-800 m-3 rounded-xl">
             <div className="flex m-3 justify-between w-full">
-                <h1 className="text-gray-800 text-xl font-bold m-2">Departments</h1>
+                <h1 className="text-gray-800 dark:text-white text-xl font-bold m-2">Departments</h1>
                 <div className="flex md:flex-row w-[400px] items-center">
                     <CustomeSearch placeholder="search department" />
                     <Button
-                        onClick={() => onOpen('addDepartment')}
-                        className="bg-custome-green-300 mx-4 hover:bg-custome-green-300"
+                        onClick={() => onOpen("addDepartment",{})}
+                        className="bg-custome-green-300 dark:bg-gray-700 dark:hover:bg-gray-700 dark:text-white mx-4 hover:bg-custome-green-300"
                     >
                         Add Department
                     </Button>

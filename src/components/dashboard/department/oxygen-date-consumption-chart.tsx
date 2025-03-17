@@ -5,6 +5,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { Button } from "@/components/ui/button"
+import useAdminStore from '@/hooks/admin-store'
+import { useParams } from 'next/dist/client/components/navigation'
 
 const generateData = () => {
     const data = []
@@ -30,12 +32,16 @@ const generateData = () => {
     return data
 }
 
-const oxygenConsumptionData = generateData()
+// const oxygenConsumptionData = generateData()
 
 export default function OxygenConsumptionChart() {
     const [startIndex, setStartIndex] = useState(0)
     const [visibleDataPoints, setVisibleDataPoints] = useState(14)
+    const { oxygenConsumptionData, departments } = useAdminStore();
+    const params = useParams();
 
+    const currentDepartment = departments.find((department: any) => department.id === params.id);
+    
     const updateVisibleDataPoints = useCallback(() => {
         const width = window.innerWidth
         if (width < 640) { // Mobile
@@ -46,6 +52,8 @@ export default function OxygenConsumptionChart() {
             setVisibleDataPoints(30)
         }
     }, [])
+
+    // console.log("oxygenConsumptionData: ", oxygenConsumptionData);
 
     useEffect(() => {
         updateVisibleDataPoints()
@@ -61,13 +69,13 @@ export default function OxygenConsumptionChart() {
     }, [visibleDataPoints])
 
     return (
-        <Card className="w-full max-w-[800px]   justify-center items-center">
+        <Card className="w-full max-w-[800px]   justify-center items-center dark:bg-gray-800">
             <CardHeader>
-                <CardTitle>Oxygen Consumption - Last Two Months</CardTitle>
-                <CardDescription>Daily oxygen consumption in the Pulmonology Department</CardDescription>
+                <CardTitle>Oxygen Consumption</CardTitle>
+                <CardDescription>{currentDepartment?.name}</CardDescription>
             </CardHeader>
             <CardContent>
-                <div className="relative h-[300px] sm:h-[400px] w-full sm:max-w-[800px]">
+                <div className="relative h-[200px] sm:h-[300px] w-full sm:max-w-[800px]">
                     <ResponsiveContainer width="100%" height="100%">
                         <LineChart
                             data={oxygenConsumptionData.slice(startIndex, startIndex + visibleDataPoints)}
@@ -81,6 +89,7 @@ export default function OxygenConsumptionChart() {
                                 interval={'preserveStartEnd'}
                             />
                             <YAxis
+                                
                                 tick={{ fontSize: 10 }}
                                 label={{ value: 'Consumption (L)', angle: -90, position: 'insideLeft', fontSize: 12 }}
                                 domain={[700, 1100]}
@@ -100,9 +109,10 @@ export default function OxygenConsumptionChart() {
                                     return null
                                 }}
                             />
+                        
                             <Line
                                 type="monotone"
-                                dataKey="consumption"
+                                dataKey="total_consumption"
                                 stroke="hsl(var(--primary))"
                                 strokeWidth={2}
                                 dot={false}
@@ -110,8 +120,9 @@ export default function OxygenConsumptionChart() {
                             />
                         </LineChart>
                     </ResponsiveContainer>
-                    <div className="absolute bottom-0 left-0 right-0 flex justify-between p-2">
+                    <div className="absolute -bottom-6 left-0 right-0 flex justify-between p-2">
                         <Button
+                            className='dark:bg-gray-700 dark:hover:bg-gray-700 dark:text-white'
                             variant="outline"
                             size="icon"
                             onClick={() => handleScroll(-1)}
@@ -121,6 +132,7 @@ export default function OxygenConsumptionChart() {
                             <span className="sr-only">Scroll left</span>
                         </Button>
                         <Button
+                            className='dark:bg-gray-700 dark:hover:bg-gray-700 dark:text-white'
                             variant="outline"
                             size="icon"
                             onClick={() => handleScroll(1)}

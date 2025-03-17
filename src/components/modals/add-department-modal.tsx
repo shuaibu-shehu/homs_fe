@@ -34,7 +34,7 @@ function AddDepartmentModal() {
     const loading = form.formState.isSubmitting;
 
     const onSubmit = async (data: z.infer<typeof AddDepartmentSchema>) => {
-        
+            
         try {
 
             const res = await addDepartment(data);

@@ -8,10 +8,8 @@ import {z} from "zod"
 import {Input} from "../ui/input"
 import {LoginFormSchema} from "@/lib/types"
 import CTAButton from "../CTA-button"
-// import { Label } from '../ui/label';
 import Link from "next/link"
 import {actionLoginInUser} from "@/lib/actions/auth"
-// import { useAuth } from '../providers/authProvider';
 import {useToast} from "@/hooks/use-toast"
 function LoginForm() {
   const {toast} = useToast()
@@ -21,6 +19,7 @@ function LoginForm() {
     resolver: zodResolver(LoginFormSchema),
     defaultValues: {email: "", password: ""},
   })
+  
   const loading = form.formState.isSubmitting
 
   const onSubmit = async (data: z.infer<typeof LoginFormSchema>) => {

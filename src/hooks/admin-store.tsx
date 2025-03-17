@@ -39,7 +39,9 @@ export const useAdminStore = create<AdminStore>()(
                 set({ departments: currentDepartments.map(department => ({
                     ...department, users: department.id === departmentId ? department.users?.filter(user => user.id !== staffId) : department.users
                 })) });
-            }
+            },
+            oxygenConsumptionData: {} as any[],
+            setOxygenConsumptionData: (data: any) => set({ oxygenConsumptionData: data }),
 
         }),
         {

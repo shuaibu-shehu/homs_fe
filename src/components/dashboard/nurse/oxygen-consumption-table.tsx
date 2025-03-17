@@ -4,48 +4,50 @@ import { Button } from '@/components/ui/button';
 import ReusableTable from '@/components/global/custome-table';
 // import useOxygenStore from '@/hooks/oxygen-store';
 import { useModal } from '@/hooks/modal-store';
-import React from 'react';
+import React, { useEffect } from 'react';
 import Link from 'next/link';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { MoreHorizontalIcon } from 'lucide-react';
-import { OxygenEntry } from '@/lib/types';
 import CustomeSearch from '@/components/global/custome-search';
 import { useStaffStore } from '@/hooks/staff-store';
+import { Bed, useBedStore } from '@/hooks/bed-store';
 
-function OxygenConsumptionTable() {
+function  OxygenConsumptionTable() {
     const { onOpen } = useModal();
-    const { department, oxygenEntries, loading } = useStaffStore();
-
+    const { beds } = useBedStore();
+    const { department, loading } = useStaffStore();
+  
+    
     const columns = [
-        { header: 'Total Oxygen Consumed', accessor: 'oxygen_consumption' },
         { header: 'Bed Number', accessor: 'bed_number' },
-        { header: 'Remarks', accessor: 'remarks' },
+        { header: 'Total Oxygen Consumed', accessor: 'oxygen_consumption' },
+        // { header: 'Remarks', accessor: 'remarks' },
         {
             header: 'Actions',
             accessor: 'actions',
             render: (value: unknown) => {
-                const row = value as OxygenEntry;
+                const row = value as Bed;
                 return (
                     <DropdownMenu>
                         <DropdownMenuTrigger>
                             <MoreHorizontalIcon className='cursor-pointer' />
                         </DropdownMenuTrigger>
-                        <DropdownMenuContent className='text-xs'>
+                        <DropdownMenuContent className='text-xs dark:bg-gray-700 dark:hover:bg-gray-700 dark:text-white'>
                             <DropdownMenuItem className='text-xs'>
-                                <Button variant='ghost' className='w-full text-black h-[30px] text-xs bg-transparent'>
-                                    <Link className='w-full text-center -p-[5px]' href={`/oxygen/view/${row.id}`}>
+                                <Button variant='ghost' className='w-full  hover:bg-gray-600 dark:hover:bg-gray-600  h-[30px] text-xs bg-transparent'>
+                                    <Link className='w-full text-center -p-[5px]' href={`/list/beds/${row.id}`}>
                                         View
                                     </Link>
                                 </Button>
                             </DropdownMenuItem>
-                            <DropdownMenuItem className='text-xs'>
+                            {/* <DropdownMenuItem className='text-xs'>
                                 <Button
-                                    onClick={() => onOpen('deleteOxygenEntry', { entryId: row.id })}
+                                    onClick={() => onOpen('deleteBed', { bedId: row.id })}
                                     variant='destructive'
-                                    className='w-full h-[30px] text-black text-xs'>
+                                    className='w-full hover:bg-gray-800 dark:hover:bg-gray-700  h-[30px] text-xs bg-transparent text-red-500'>
                                     Delete
                                 </Button>
-                            </DropdownMenuItem>
+                            </DropdownMenuItem> */}
                         </DropdownMenuContent>
                     </DropdownMenu>
                 );
@@ -60,22 +62,30 @@ function OxygenConsumptionTable() {
                 <div className="flex md:flex-row w-[400px] items-center">
                     <CustomeSearch placeholder="search oxygen entry" />
 
-                    <Button
+                    {/* <Button
                         onClick={() => onOpen('addOxygenEntry', { departmentId: department?.id as string })}
-                        className="bg-custome-green-300 mx-4 hover:bg-custome-green-300"
+                        className="bg-custome-green-300 mx-4 dark:bg-gray-700 dark:hover:bg-gray-700 dark:text-white hover:bg-custome-green-300"
                     >
                         Add Entry
-                    </Button>
+                    </Button> */}
                 </div>
             </div>
 
-            {(oxygenEntries.length > 0 && !loading) && (
-                <ReusableTable columns={columns} data={oxygenEntries} />
+            {(beds.length > 0 && !loading) && (
+                <ReusableTable 
+                    columns={columns} 
+                    data={beds.map(bed => ({
+                        id: bed.id,
+                        bed_number: bed.bed_number,
+                        oxygen_consumption: bed.oxygen_consumption,
+                        actions: bed
+                    }))} 
+                />
             ) }
             
-            {(oxygenEntries.length === 0 && !loading) && (
+            {(beds.length === 0 && !loading) && (
                 <div className='flex justify-center items-center'>
-                    <h1 className='text-gray-800 text-xl font-bold m-2'>No oxygen consumption records found</h1>
+                    <h1 className='text-gray-800 text-xl font-bold m-2'>No beds found</h1>
                 </div>
             )}
 

@@ -7,7 +7,7 @@ export const { handlers: { GET, POST }, signIn, signOut, auth } = NextAuth({
     async signIn({ user, account }) {
 
       // Allow OAuth or credentials-based login
-      
+
       if (account?.provider !== "credentials") return true;
 
       // return false
@@ -16,7 +16,7 @@ export const { handlers: { GET, POST }, signIn, signOut, auth } = NextAuth({
 
     async jwt(data) {
       const { user, token } = data;
-            
+
       // Store user info in the token during initial sign-in
       if (user) {
         token.accessToken = user.accessToken;

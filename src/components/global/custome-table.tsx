@@ -14,9 +14,9 @@ interface ReusableTableProps<T> {
 
 const CustomeTable = <T extends Record<string, unknown>>({ columns, data }: ReusableTableProps<T>) => {
     return (
-        <Table className="w-full bg-white border-collapse">
-            <TableHeader className="bg-custome-green-200 text-custome-green-300">
-                <TableRow>
+        <Table className="w-full bg-white dark:bg-gray-800 border-collapse">
+            <TableHeader className="bg-custome-green-200 dark:bg-gray-700 text-custome-green-300 dark:text-white">
+                <TableRow className='hover:bg-custome-green-200 dark:hover:bg-gray-700'>
                     {columns.map((column, index) => (
                         <TableHead key={index} className="text-custome-green-300 px-4 py-2">
                             {column.header}
@@ -26,7 +26,7 @@ const CustomeTable = <T extends Record<string, unknown>>({ columns, data }: Reus
             </TableHeader>
             <TableBody>
                 {data.map((row: T, rowIndex) => (
-                    <TableRow key={rowIndex} className="hover:bg-gray-50">
+                    <TableRow key={rowIndex} className="hover:bg-gray-50 dark:hover:bg-gray-700">
                         {columns.map((column, colIndex) => (
                             <TableCell key={colIndex} className="px-4 py-2">
                                 {column.render

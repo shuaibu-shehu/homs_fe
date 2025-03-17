@@ -12,9 +12,9 @@ function NotificationsAndAlerts() {
     ];
 
     return (
-        <div className="p-6  flex gap-2 flex-row lg:flex-col">
+        <div className="p-6  flex gap-2 flex-row lg:flex-col dark:bg-gray-800 rounded-xl">
             {/* Notifications Section */}
-            <div className="bg-white p-2 rounded shadow-md">
+            <div className="bg-white dark:bg-gray-700 p-2 rounded shadow-md">
                 <div className=' border-b-2 text-gray-500 py-2'>
                 <h1 className="text-sm font-bold ">Notifications</h1>
                 </div>
@@ -34,7 +34,7 @@ function NotificationsAndAlerts() {
 
             {/* Alerts Section */}
         
-                <div className="bg-white flex flex-col gap-2 p-2 rounded shadow-md">
+                <div className="bg-white dark:bg-gray-700 flex flex-col gap-2 p-2 rounded shadow-md">
                     <div className=' border-b-2 text-gray-500 py-2'>
                         <h1 className="text-sm font-bold ">Alerts</h1>
                     </div>

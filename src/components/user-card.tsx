@@ -25,7 +25,7 @@ const UserCard = ({ type, details }:
     const LucideIcon = getType(type);
     
     return (
-        <div className="rounded-2xl p-4 flex-1 gap-1 w-[230px] h-[141px] flex flex-col justify-center items-center bg-white">
+        <div className="rounded-2xl p-4 flex-1 gap-1 w-[230px] h-[141px] flex flex-col justify-center items-center bg-white dark:bg-gray-800">
             <div className="flex justify-between items-center">
                 {/* <span className="text-[10px] bg-white px-2 py-1 rounded-full text-green-600">
                     2024/25
@@ -34,7 +34,7 @@ const UserCard = ({ type, details }:
             </div>
             <LucideIcon className="min-w-[30px] min-h-[30px] mx-auto text-lamaPurple" />
             <p className={cn("text-xs text-gray-500")}>Total {type}</p>
-            <h1 className="text-2xl font-semibold">{details?.length}</h1>
+            <h1 className="text-2xl font-semibold">{details?.length || 0}</h1>
             {/* <p className={cn(`bg-custome-red-100 px-1 text-xs rounded-full ${type === 'sensor' ? 'bg-custome-green-200' : ''}`)}>
                 {details}
             </p> */}

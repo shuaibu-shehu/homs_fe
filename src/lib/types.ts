@@ -138,6 +138,7 @@ export type Department = {
   createdAt?: string;
   updatedAt?: string;
   status?: boolean;
+  beds?: any[];
 };
 
 
@@ -154,6 +155,8 @@ export interface AdminStore {
   deleteDepartment: (departmentId: string) => void;
   addStaffToDepartment: (departmentId: string, staff: User) => void;
   deleteStaffFromDepartment: (departmentId: string, staffId: string) => void;
+  oxygenConsumptionData: any[];
+  setOxygenConsumptionData: (data: any[]) => void;
   // ... other properties
 };
 
@@ -212,3 +215,8 @@ export interface DailyOxygenConsumption {
   patients_count?: number;
   total_consumption?: number;
 }
+
+export const AddBedSchema = z.object({
+  bedNumber: z.number().min(1, "Bed number is required"),
+  sensorId: z.string().optional(),
+});

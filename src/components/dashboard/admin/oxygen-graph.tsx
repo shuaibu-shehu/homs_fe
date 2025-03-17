@@ -1,3 +1,5 @@
+import { Button } from '@/components/ui/button';
+import { Department } from '@/lib/types';
 import React, { useState, useEffect } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
@@ -12,7 +14,11 @@ async function fetchDepartmentData() {
     ]);
 }
 
-function OxygenGraph() {
+interface OxygenGraphProps {
+  departments: Department[];
+}
+
+const OxygenGraph: React.FC<OxygenGraphProps> = ({ departments }) => {
     const [chartData, setChartData] = useState([]);
     const [visibleDepartments, setVisibleDepartments] = useState(new Set<string>());
     const [currentPage, setCurrentPage] = useState(0);
@@ -58,9 +64,9 @@ function OxygenGraph() {
     };
 
     return (
-        <div>
-            <h2>Oxygen Levels by Department</h2>
-            <div>
+        <div className='dark:bg-gray-800 rounded-xl p-3'>
+            <h2 className='text-custome-green-300 dark:text-white'>Oxygen Levels by Department</h2>
+            <div className='flex flex-wrap gap-2 my-2'>
                 {chartData.map(item => (
                     <label key={item.department} style={{ marginRight: '10px' }}>
                         <input
@@ -72,9 +78,9 @@ function OxygenGraph() {
                     </label>
                 ))}
             </div>
-            <ResponsiveContainer width="100%" className='w-[700px]' height={400}>
+            <ResponsiveContainer width="100%" className='max-w-[700px]' height={400}>
                 <BarChart
-                    className='bg-white min-w-[900px]'
+                    className='bg-white dark:bg-gray-800 min-w-[700px] py-3'
                     data={paginatedData}
                     margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
                 >
@@ -94,9 +100,9 @@ function OxygenGraph() {
                     ))}
                 </BarChart>
             </ResponsiveContainer>
-            <div>
-                <button onClick={() => handlePageChange('prev')} disabled={currentPage === 0}>Previous</button>
-                <button onClick={() => handlePageChange('next')} disabled={(currentPage + 1) * itemsPerPage >= transformedData.length}>Next</button>
+            <div className='flex justify-center gap-2 my-2'>
+                <Button onClick={() => handlePageChange('prev')} disabled={currentPage === 0}>Previous</Button>
+                <Button onClick={() => handlePageChange('next')} disabled={(currentPage + 1) * itemsPerPage >= transformedData.length}>Next</Button>
             </div>
         </div>
     );

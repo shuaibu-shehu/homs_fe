@@ -1,15 +1,15 @@
 'use server'
 
 import { z } from "zod"
-import {httpWithBearer}  from "./http"
-import { AddDepartmentSchema, AddOxygenEntrySchema, AddStaffSchema } from "../types"
+import { httpWithBearer } from "./http"
+import { AddBedSchema, AddDepartmentSchema, AddOxygenEntrySchema, AddStaffSchema } from "../types"
 import { AxiosError } from 'axios';
 
 
-export const addDepartment = async (value: z.infer<typeof AddDepartmentSchema>) => { 
+export const addDepartment = async (value: z.infer<typeof AddDepartmentSchema>) => {
     const $httpWithBearer = await httpWithBearer()
     try {
-        
+
         const response = await $httpWithBearer.post('/departments', value)
         console.log("responsegdf: ", response.data)
         if (response.data.success) {
@@ -26,7 +26,7 @@ export const addDepartment = async (value: z.infer<typeof AddDepartmentSchema>) 
 }
 
 
-export const getDepartmentById = async (id: string) => { 
+export const getDepartmentById = async (id: string) => {
     const $httpWithBearer = await httpWithBearer()
     try {
         const response = await $httpWithBearer.get(`/departments/${id}`)
@@ -43,7 +43,7 @@ export const getDepartmentById = async (id: string) => {
     }
 }
 
-export const addStaff = async (data: z.infer<typeof AddStaffSchema>, departmentId: string) => { 
+export const addStaff = async (data: z.infer<typeof AddStaffSchema>, departmentId: string) => {
     const $httpWithBearer = await httpWithBearer()
     try {
 
@@ -79,19 +79,19 @@ export const getDepartments = async () => {
 export const getUsersInHospital = async (hospitalId: string) => {
     try {
         console.log("hospitalId kljlkjm: ", hospitalId);
-        
+
         const $httpWithBearer = await httpWithBearer()
         const response = await $httpWithBearer.get(`/hospital/users/${hospitalId}`)
         console.log("response users in hospital: ", response.data);
-        
+
         return response.data
-        
+
     } catch (error: unknown) {
         if (error instanceof AxiosError && error.response) {
             return { success: false, message: error.response.data.detail }
         }
         return { success: false, message: "An unexpected error occurred" }
-    }   
+    }
 }
 
 
@@ -115,7 +115,7 @@ export const deleteDepartment = async (departmentId: string) => {
 }
 
 export const deleteStaff = async (departmentId: string, staffId: string) => {
-    try {   
+    try {
         const $httpWithBearer = await httpWithBearer()
         const response = await $httpWithBearer.delete(`/departments/staffs/${departmentId}/${staffId}`)
         if (response.data.success) {
@@ -140,7 +140,7 @@ export const addOxygenEntryAction = async (data: z.infer<typeof AddOxygenEntrySc
         "remarks": data.remarks,
     }
     // console.log("formattedData: ", formattedData, "departmentId: ", departmentId, "staffId: ", staffId);
-    try {   
+    try {
         const $httpWithBearer = await httpWithBearer()
         const response = await $httpWithBearer.post(`/oxygen/${departmentId}/${staffId}`, formattedData)
         return response.data
@@ -154,12 +154,12 @@ export const addOxygenEntryAction = async (data: z.infer<typeof AddOxygenEntrySc
 
 
 
-export const getOxygenConsumptionOfTheDay = async (departmentId: string,date: string) => {
+export const getOxygenConsumptionOfTheDay = async (departmentId: string, date: string) => {
+    console.log("date: ", date, "departmentId: ", departmentId);
     try {
-        console.log("date: ", date, "departmentId: ", departmentId);
-        
+
         const $httpWithBearer = await httpWithBearer()
-        const response = await $httpWithBearer.get(`oxygen/daily/${departmentId}/${date}`)  
+        const response = await $httpWithBearer.get(`oxygen/daily/${departmentId}/${date}`)
         console.log("response get oxygen consumption by department id: ", response.data);
         return response.data
     } catch (error: unknown) {
@@ -176,9 +176,9 @@ export const deleteOxygenEntry = async (oxygenEntryId: string) => {
     try {
         const $httpWithBearer = await httpWithBearer()
         const response = await $httpWithBearer.delete(`/oxygen/entry/${oxygenEntryId}`)
-       if(response.data.success){
+        if (response.data.success) {
             return { success: true, message: response.data.message, data: response.data.data }
-        }else{
+        } else {
             return { success: false, message: response.data.message }
         }
     } catch (error: unknown) {
@@ -188,3 +188,36 @@ export const deleteOxygenEntry = async (oxygenEntryId: string) => {
         return { success: false, message: "An unexpected error occurred", error: error }
     }
 }
+
+
+export const addBedAction = async (data: z.infer<typeof AddBedSchema>, departmentId: string) => {
+    try {
+        const formattedData = {
+            "bed_number": data.bedNumber,
+            "sensor_id": data.sensorId,
+        }
+        const $httpWithBearer = await httpWithBearer()
+        const response = await $httpWithBearer.post(`/beds/${departmentId}`, formattedData)
+        console.log("response add bed: ", response);
+        return response.data
+    } catch (error: unknown) {
+        if (error instanceof AxiosError && error.response) {
+            return { success: false, message: error.response.data.detail }
+        }
+        return { success: false, message: "An unexpected error occurred" }
+    }
+}
+
+export async function deleteBed(bedId: string) {
+    try {
+        const $httpWithBearer = await httpWithBearer()
+        const response = await $httpWithBearer.delete(`/beds/${bedId}`)
+        return response.data
+    } catch (error) {
+        if (error instanceof AxiosError && error.response) {
+            return { success: false, message: error.response.data.detail }
+        }
+        return { success: false, message: "An unexpected error occurred" }
+    }
+}
+

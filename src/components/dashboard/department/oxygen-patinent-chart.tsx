@@ -51,9 +51,10 @@ const OxygenPerPatientChart = () => {
     };
 
     return (
-        <div className="flex flex-col w-full justify-center items-center">
-            <ResponsiveContainer className={"m-3 max-w-[800px] rounded-lg bg-white"} height={400}>
+        <div className="flex flex-col w-full justify-center items-center dark:bg-gray-800 p-3 rounded-xl">
+            <ResponsiveContainer className={"m-3 max-w-[800px] rounded-lg bg-white dark:bg-gray-800"} height={400}>
                 <BarChart
+                    
                     data={visibleData}
                     margin={{ top: 20, right: 30, left: 20, bottom: 25 }} // Increased bottom margin
                     barSize={28}
@@ -103,8 +104,8 @@ const OxygenPerPatientChart = () => {
                     onClick={handlePrevious}
                     disabled={currentPage === 0}
                     className={`px-4 py-2 rounded ${currentPage === 0
-                        ? 'bg-gray-200 cursor-not-allowed'
-                        : 'bg-green-500 hover:bg-green-600 text-white'
+                        ? 'bg-gray-200 dark:bg-gray-700 cursor-not-allowed'
+                        : 'bg-green-500 dark:bg-gray-700 hover:bg-green-600 text-white'
                         }`}
                 >
                     Previous
@@ -116,8 +117,8 @@ const OxygenPerPatientChart = () => {
                     onClick={handleNext}
                     disabled={currentPage === totalPages - 1}
                     className={`px-4 py-2 rounded ${currentPage === totalPages - 1
-                        ? 'bg-gray-200 cursor-not-allowed'
-                        : 'bg-green-500 hover:bg-green-600 text-white'
+                        ? 'bg-gray-200 dark:bg-gray-700 cursor-not-allowed'
+                        : 'bg-green-500 dark:bg-gray-700 hover:bg-green-600 text-white'
                         }`}
                 >
                     Next

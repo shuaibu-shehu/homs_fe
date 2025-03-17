@@ -13,7 +13,7 @@ type CustomeSearchProps = {
 function CustomeSearch({ buttonText, placeholder, onChange}: CustomeSearchProps) {   
   return (
       <div className='max-w-[515px] flex gap-2 justify-center items-center '>
-          <div className='flex rounded-md gap-2 relative border-2 border-custome-green-300'>
+          <div className='flex rounded-md gap-2 relative border-2 border-custome-green-300 dark:border-gray-700'>
               <Search size={20} className=' text-custome-green-400 absolute top-2 left-2' />
               <Input
                   onChange={onChange}
